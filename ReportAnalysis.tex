@@ -1,0 +1,508 @@
+\documentclass[sigchi]{acmart}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{natbib}
+\usepackage{quoting}
+
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+
+\settopmatter{printacmref=false, printccs=false, printfolios =false}
+\setcopyright{none} 
+\renewcommand\footnotetextcopyrightpermission[1]{}
+
+\acmConference[MSA A.A. 2019-2020]{ }{September, 2020}{ }
+
+\begin{document}
+
+\title{Analysis of "Cloudlet-based Efficient Data Collection in Wireless Body Area Networks" report}
+
+\author{Andrea Graziani}
+\email{andrea.graziani93@outlook.it}
+\affiliation{%
+  \institution{Università Degli Studi di Roma Tor Vergata}
+  \city{Rome}
+  \state{Italy}
+}
+
+\renewcommand{\shortauthors}{Andrea Graziani (0273395)}
+
+\maketitle
+
+\section{Introduction}
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~1.4]{MSAReport}}]
+The main goal of this paper is to develop a large scale WBANs system in the presence of cloudlet-based data collection model. The objective is to minimize end-to-end packet cost by dynamically choosing data collection to the cloud by using cloudlet based system [...] reducing packet-to-cloud energy, the proposed work also attempt to minimize the end-to-end packet delay
+\end{quoting}
+
+\vspace{0.3cm}
+
+According to \citet{MSAReport}, the goal of their work is to model is to built an efficient \textbf{Wireless Body Area Networks} (\textbf{WBAN}) exploiting \textbf{edge computing}, a new paradigm in which substantial computing and storage resources, referred to as \textbf{cloudlets}, are placed at the Internet's edge, that is in close proximity to WBAN devices or sensors.\cite{TheEmergenceOfEdgeComputing}
+
+To be more precise, \citet{MSAReport} intent is to exploit edge computing resources to \textbf{minimize average power consumption and delay}, when transmitting collected data by Personal Digital Assistant (PDA) device to cloud, through a \textit{self-adaptive behaviour} according to which \textbf{communication technology is dynamically changed} when users move from one region to another. 
+
+In fact, their study is based on the observation that, using WiFi technology, a WBAN user will be able to transmit data packet to the cloud with low power, low delay and mostly no connection cost compared with cellular technology:
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~3.1]{MSAReport}}]
+It was shown that, via WiFi, the transmission power of a data packet of size 46 Bytes will cost about 30 mw and with a delay of 0.045 ms. On the other hand, a longer transmission range cellular network connection (e.g. 3G and LTE) is capable of transmitting the data packet to the cloud from any location that is cover by cellular network, which is usually a wider geographic area compared with the WiFi. It was shown that, via cellular, the transmission power of data packet of size 46 Bytes will cost about 300 mw and with a delay of 0.45 ms.
+\end{quoting}
+
+\vspace{0.3cm}
+
+Obliviously, due both to the \textbf{need of edge infrastructure resources} and to \textbf{short transmission range} of WiFi technology compared to cellular network, cloudlet and WiFi coverage aren't available everywhere, therefore \citet{MSAReport} model their system identifying three different regions:\cite[par.~3.1]{MSAReport} 
+
+\begin{description}
+
+\item[Cloudlet Region (CR)] where WiFi coverage is available, so a user can use it to transmit data to the cloudlet.
+
+\item[Enterprise Region (ER)] where only cellular coverage is available, therefore  a user can use only cellular technology to transmit a data packet to cloud. 
+
+\item[Not-covered Region (NC)] where neither WiFi nor cellular technology is available. In this case a user should buffer the packets until one of the above technologies is available, then to be able of transmitting the packet to the enterprise cloud. 
+
+\end{description}
+
+\subsection{Architecture Overview}
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~3.2]{MSAReport}}]
+
+The architecture of the enterprise system is mostly same architecture as in cloud based data centres with all its components and features. In our implementation, the enterprise cloud system will be the ultimate destination of the collected data. The enterprise cloud is also able to send messages back to both the cloudlet system or to WBAN users.
+
+\end{quoting}
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~4.1]{MSAReport}}]
+
+The enterprise cloud system is a centralized management and storage point that can be accessed by different organizations that are interested in a certain type of data. 
+
+\end{quoting}
+
+\vspace{0.3cm}
+
+Based on what has been said in previous section, in \citet{MSAReport}'s system model WBAN users are capable to exploit edge computing resources if and only if they are in a \textit{Cloudlet Region}, otherwise they go on transmitting data directly to the cloud if possible; therefore, is evident that, as state by \citet{MSAReport} too, cloud plays a very important role in that system since represent the ultimate destination of collected data and perform critical task providing access to data. In other words, seem enough clear that cloudlet is less critical compared to cloud to providing system services.
+
+Therefore, using \citet{EdgeNativeApplications} proposed application taxonomy, the WBAN system prototype modelled by \citet{MSAReport} is intended for \textit{edge-accelerated, cloud-native applications}:
+
+\begin{description}
+
+\item[cloud-native] because, to overcome stringent constraints on battery, performance and storage of WBAN devices, cloud resources are exploited, through offloading techniques over a wireless network, \textbf{to execute critical task}; in other words, cloud is the primary execution site and it is essential to provide services to final users.
+
+\item[edge-accelerated] because the system exploits edge computing resources \textbf{only when available}. In that way, that system is capable to provide optimal performance, but edge resources represents a secondary execution site, that is they are optional to provide services.
+
+\end{description}
+
+Unfortunately, it is shown edge-accelerated, cloud-native applications can \textbf{only partially} benefit from the advantages of edge computing in term of \textit{response times}, \textit{battery life}, \textit{ingress bandwidth demand reduction}, \textit{privacy} and \textit{fallback services}. However any application using this kind of system involves less investment risk, much less software development, and their markets are much larger since they can function acceptably even in the absence of edge computing.
+
+\subsection{Performance evaluation}
+
+The performance of WBAN system proposed by \citet{MSAReport} is evaluated through several simulations focusing on two performance metrics, that is:
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~4.2]{MSAReport}}]
+\textit{Packet Transmission Power} and \textit{Packet Delay}. The Packet Transmission Power and Packet Delay are directly measure of the communication energy and delay expenditure from the Personal Digital Assistant (PDA) device to the cloudlet or the enterprise cloud
+
+\end{quoting}
+
+\vspace{0.3cm}
+
+Using a custom version of CloudSim simulator, according to \citet{MSAReport}, simulations were carried out monitoring a virtual space-area, where several cloudlet entities were deployed in known geographic locations in such a way transmission range belonging to different cloudlet not overlapping. Moreover, during simulations, several WBAN users were moved randomly with fixed speed and random pause time. 
+
+\citet{MSAReport} performs several set of simulation varying several parameters of their system like:
+\begin{itemize}
+\item number of users.
+\item number of deployed cloudlet.
+\item number of Virtual Machines (VM) deployed in cloudlet.
+\item area size.
+\item cloudlet placement.
+\item speed of processing a data packet on cloudlet. 
+\end{itemize}
+
+\subsubsection{hgfhfg}
+
+In order to observe the effect on data packet process delay and power consumption according to task load of the received data on the cloudlet, a first set of simulations are carried out \textbf{varying processing speed of data packet} between 100 and 900 million instructions per second (MIPS). 
+
+In this first set of experiments, \citet{MSAReport} draw the following conclusions:
+
+\begin{enumerate}
+
+\item Fixed the average time required to process a packet data on a CPU, that is for a given MIPS process speed, power consumption and processing delay are increased by increasing the number of users. This happens for several reasons:
+
+\begin{itemize}
+\item The fraction of time according to which cloudlet is is busy increases, in other words the period that cloudlet is non-idle is longer; therefore, since more time is needed to complete user tasks, more power are consumed.
+
+\item aumenta lamda
+\end{itemize} 
+
+
+
+
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+In first case, data is offloaded to cloud using a \textbf{multi-hop network connections} and moreover, although bandwidth between the mobile de-
+vice and the first hop (i.e., the first mile) and the last hop and the cloud resource (i.e., the last mile) is potentially high bandwidth, the bandwidth between the rest of the hops is likely low. Therefore RTT is very high.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{MAC protocol}
+
+According to \citet{MSAReport}, the medium access mechanisms used in their simulation is \textbf{pooling-based}, that is a strictly centralized scheme, also called \textbf{point coordination function} (\textbf{PCF}), in which the access point, called \textbf{master}, dynamically polls clients for data. According to this scheme, the master is allowed to build a list of stations wishing to transmit during a contention phase. After this phase, the station polls each station on the list.
+
+In a WBAN's context, this choice has several advantages:
+
+\begin{itemize}
+
+\item PCF is capable to offer time-bounded service, \textbf{guaranteeing a maximum access delay and minimum transmission bandwidth} making the system more \textbf{predictable} and, therefore, more suitable \textbf{real-time} health monitoring; in fact, if a predictable system is used, will be possible to know with reasonable approximation the \textit{worst case execution time} (WCET) of jobs and check if any hard real-time constraints is respected.
+
+\item Since WBAN users are not allowed to send data without the master's invitation, the \textbf{hidden terminal problem is eliminated}. Keep in mind that using DCF (Distributed coordination function) with RTS/CTS extension, in order to resolve hidden terminal problem, is not suitable in a WBAN's context because to short frame (only 46 byte) send by devices; RTS/CTS extension would introduce a non-negligible overhead causing a waste of bandwidth, higher delay and energy consumption.
+
+\item This scheme allow higher throughput due to less collisions respect to CSMA/CA.
+
+\end{itemize}
+
+Obliviously this choice isn't a panacea; it can introduce higher delay under a light load and overhead if nodes have nothing to send.
+
+\subsection{System Architecture}
+
+Edge Computing 
+
+It tends to lengthen
+network round-trip times (RTT) from mobile users, and to
+increase cumulative ingress bandwidth demand from Inter-
+net of Things (IoT) devices.
+
+Remote: Computation or data is oﬄoaded to a remote resource
+such as an enterprise cloud or data center, as shown in part (a)
+of Fig. 3. In this case, it is a synchronous operation that requires
+multiple network hops between the mobile device and the enter-
+prise cloud. Even though the bandwidth between the mobile de-
+vice and the ﬁrst hop (i.e., the ﬁrst mile) and the last hop and the
+cloud resource (i.e., the last mile) is potentially high bandwidth,
+thebandwidthbetweentherestofthehopsislikely low.
+
+
+\citet{MSAReport} 
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Minimizing \textit{Packet Transmission Power}}
+
+
+It was shown that, via WiFi, the transmission power of a data packet of size 46 Bytes will cost about
+30 mw [29,31,32] and with a delay of 0.045 ms. On the other hand, a longer transmission range cellular network connection
+(e.g. 3G and LTE) is capable of transmitting the data packet to the cloud from any location that is cover by cellular network,
+
+which is usually a wider geographic area compared with the WiFi. It was shown that, via cellular, the transmission power of
+data packet of size 46 Bytes will cost about 300 mw and with a delay of 0.45 ms
+
+\section{}
+
+In this section, we will describe other techniques and designs capable to reduce power consumption in WBAN devices.
+
+\subsection{Approximate Computing Techniques}
+
+
+
+
+\subsection{RRRRRRRRRR}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~3.1]{MSAReport}}]
+It was shown that, via WiFi, the transmission power of a data packet of size 46 Bytes will cost about 30 mw and with a delay of 0.045 ms. On the other hand, a longer transmission range cellular network connection (e.g. 3G and LTE) is capable of transmitting the data packet to the cloud from any location that is cover by cellular network, which is usually a wider geographic area compared with the WiFi. It was shown that, via cellular, the transmission power of data packet of size 46 Bytes will cost about 300 mw and with a delay of 0.45 ms [...]
+
+
+With WiFi, a WBAN user will be able to transmit the data packet to the cloud with low power and low delay compared with cellular technology, but with transmission range does not exceed 100 m. [...]
+
+
+While the cellular connection is very costly in terms of power, transmission delay and connection cost (the WiFi is mostly free of charge),
+\end{quoting}
+
+\vspace{0.3cm}
+
+According to \citet{MSAReport}, including many other researches cited by them, 
+
+Is known that energy is one of the most valuable resources in a WBAN.
+
+According to researchers of this study, the key method to reduce power consumption (and connection cost) is to develop a \textbf{self-adaptive system capable to change data communication technology dynamically when users move from one region to another}. 
+
+To be more precise, if WiFi coverage is available, users will use WiFi technology to transmit a data packet, otherwise an user can use only cellular technology. If neither WiFi or cellular technology is available, users will buffer the packets until one of the above technologies is available.\cite[par.~3.1]{MSAReport}
+
+
+\subsection{}
+
+Unfortunately, researchers don't specify which version of the standard IEEE 802.11 is used in their simulations, however they declare that transmission range of WiFi base stations does not exceed 100 m. 
+
+We believe that this system model can hardly be used for offloading in outdoor scenarios owing to short transmission range of WiFi stations and high economical effort to build proposed infrastructure.
+
+
+
+In order to perform their simulations and study the impacts of cloudlet servers on packet delay and power consumptions, researchers model a large scale WBANs system using two monitored areas, one of $600$ x $400$ $m$ and $800$ x $800$ $m$, in which several users are moved in randomly. \citet{MSAReport} perform several simulations varying also the number of users and cloudlet.
+
+
+
+
+
+ 800 800 m = 
+
+Researchers declare to study the impacts of installing cloudlet servers on the data collection performance in the monitoring area, the
+following experiments were carried out. 400 users were moved in a random waypoint model within a monitored area of
+600 400 m.
+
+
+Although 802.11n and 802.11.ac data rates are comparable to or
+even higher than the rates of the modern mobile networks, e.g. LTE, they
+
+
+a 100 m transimmission range
+
+
+
+
+
+
+
+The 802.11ah standard enables single-hop communication over distances up to 1000 m.
+
+
+
+However, it is not suited for facilitating commu-
+nication among a large number of IoT devices or for covering
+large areas.
+
+
+
+
+
+
+
+
+
+
+
+The power consumption of wireless transceivers is 
+substantially impacted by their transmission power, which 
+can be responsible for up to 70% of the total power 
+consumption for off-the-shelf sensor nodes, e.g.
+
+Energy is one of the most valuable resources in a 
+WBAN. One of the major sources of energy waste in 
+WBANs originates from internetwork interference between 
+nearby WBANs which causes the Signal-to-Interference-
+and-Noise Ratio (SINR) to drop and thereby throughput 
+degrades.
+
+
+----------
+
+Roma - 1287,36 km2 = 1287360000 m2
+
+2.011,5 cloudlet  
+
+
+3.240.000
+
+
+
+
+Medium Access
+Control (MAC) protocols play a signiﬁcant role in maximizing
+the lifetime of WBAN by controlling the dominant sources
+of energy waste, i.e., collision, idle listening, overhearing,
+and control packet overhead.
+
+To achieve communication over longer distances among a large number of low-power devices, several innovative concepts 
+
+The 802.11ah standard enables single-hop communication over distances up to $1000 m$.
+
+
+As expected, \citet{MSAReport} results demonstrate that increasing the number of users, for a given cloudlet deployment, will increase the power and delay of the collected data; this happens due an higher probability of collision and to interference between nearby WBAN devices, which causes the Signal-to-Interference-and-Noise Ratio (SINR) to drop and thereby throughput degrades.
+
+
+ The
+default medium access control (MAC) protocol for channel access in this standard is the distributed coordination
+function (DCF), which is a random access scheme based
+on carrier sense multiple access with collision avoidance
+(CSMA/CA).
+
+In addition to the basic access, an optional four way handshaking technique, known as request-to-send/clear-to-send
+(RTS/CTS) mechanism has been standardized. Before transmitting a packet, a station operating in RTS/CTS mode “reserves”
+the channel by sending a special Request-To-Send short frame.
+The destination station acknowledges the receipt of an RTS
+frame by sending back a Clear-To-Send frame, after which
+normal packet transmission and ACK response occurs. Since
+collision may occur only on the RTS frame, and it is detected
+by the lack of CTS response, the RTS/CTS mechanism allows
+to increase the system performance by reducing the duration
+of a collision when long messages are transmitted. As an
+important side effect, the RTS/CTS scheme designed in the
+802.11 protocol is suited to combat the so-called problem of
+Hidden Terminals
+
+
+ The primary medium access control (MAC) technique of 802.11 is called distributed coordination function (DCF). DCF is a carrier sense multiple access
+with collision avoidance (CSMA/CA) scheme with binary slotted
+exponential backoff
+
+
+
+
+the overheads associated with
+the RTS and CTS transmissions – for short and time-critical data packets, this is not negligible 
+
+
+\section{Medium Access Control}
+
+The power consumption of wireless transceivers is substantially impacted by their transmission power, which can be responsible for up to \textbf{70\%} of the total power consumption. It was shown that the use of a Medium Access Control (MAC) protocols capable to minimize the dominant sources of energy waste like \textit{collision}, \textit{idle listening} and \textit{control packet overhead} is extremely useful to maximizing the lifetime of WBAN devices.
+
+Unfortunately, \citet{MSAReport} don't give any details about used MAC protocol to transmit aggregated data packet to cloudlet, not even specifying the version of the standard IEEE 802.11 used in their simulations, although they declare that its transmission range does not exceed 100 m. Therefore, for our analysis we assume that \citet{MSAReport} have used legacy IEEE 802.11 protocol with default medium access control protocol for channel access, that is the distributed coordination function (DCF), which is a random access scheme based on carrier sense multiple access with collision avoidance (CSMA/CA).
+
+In this section we try to prove that the use of traditional legacy IEEE 802.11 protocol can hardly be used for offloading in outdoor scenarios.
+
+To achieve communication over longer distances among a large number of low-power devices, we can exploit the several innovative concepts introduced in the PHYsical (PHY) and Medium Access Control (MAC) layers of 802.11ah standard. As known, the 802.11ah standard enables single-hop communication over distances up to $1000 m$ and, thanks to Unlicensed < 1GHz band, better propagation characteristics in outdoor scenarios than traditional for Wi-Fi 2.4 and 5 GHz bands.
+
+The Carrier Sense Multiple Access with Collision Avoid-ance (CSMA/CA)-based MAC of 802.11 fails to handle collisions, especially when thousands of devices simultaneously contend for a channel. To address this issue, the 802.11ah introduces a Restricted Access Window (RAW)-based mechanism that improves the network performance significantly. This mechanism splits the STAs into groups and allows the STAs belonging to a certain group to access the medium at any particular time frame.
+
+Although .11ah PHY provides high data rates, the aggregate throughput may be very low because of the huge overhead inherent to short packet transmission typical for sensor networks.
+
+o reduce it, the draft standard defines a new backward incompatible
+format of shortened headers for data, management and novel control frames
+
+
+
+
+
+
+
+
+\section{gd}
+
+Re
+
+
+
+
+
+
+
+
+
+
+nother approach is to reduce the
+ﬁdelity of the underlying algorithms when edge computing is
+not available.
+
+
+\section{The cloudlet discovery issue}
+
+Is obvious that WBAN users need to be able to locate available cloudlet in an area on which stage data, but this issue has not been addressed by \citet{MSAReport} in any way; we believe that it is a very big mistake because it was shown that cloudlet discovery affects energy consumptions significantly and, more importantly, it is a functional requirements for any cyber-foraging systems.
+
+In WBAN systems, maximize energy efficiency,in order to preserve devices lifetime is critical but, since transmitted data are very sensitive, we believe that security is very important too. Therefore, a possible solution to cloudlet discovery issue is the use of \textbf{Cloud Surrogate Directory} tactic, according to which the mobile device contacts a cloud server that maintains a list of potential cloudlet/surrogates. 
+
+Using this tactic Security is highly increased because the mobile device only needs to trust the cloud surrogate directory server and can pre-exchange credentials for authorization. The surrogate directory server can also exchange credentials with its surrogates as part of the registration process, which means that the directory would only contains trusted surrogates.
+
+Because the selection algorithm of optimal cloudlet runs in the cloud it also increases energy efficiency. 
+
+However, response/execution time can be increased because of the the additional directory
+query time. In addition, availability is negatively affected
+because the mobile device requires consistent connectivity to
+the cloud at least in the discovery phase, which means that
+the cloud server becomes a single-point-of-failure.
+
+\section{Mobility management issue}
+
+\section{Economical issues}
+
+The lower the frequency, the better the penetration. Long waves can be transmitted through the oceans to a submarine while high frequencies can be blocked by a tree. The higher the frequency, the more the behaviour of the radio waves resemble that of light.
+
+As known, the 802.11ah standard enables communication over distances up to $1000 m$ and, since it use a lower frequency (< 1GHz) it has better propagation characteristics in outdoor scenarios than traditional for Wi-Fi 2.4 and 5 GHz bands. 
+
+
+
+\section{dsadas}
+
+\citet{MSAReport} report lacks of a specification model capable to turn needed system variables 
+’s states into a collection of mathematical variables together with equations and logic describing how the state variables are interrelated, including algorithms for computing their interaction and evolution in time
+
+We believe that the study 
+
+For example, \citet{MSAReport} doesn't report how \textit{users movements speed} (fixed to $2 m/s$) and the \textit{random pause time} (fixed to $1-10 s$) affected simulation's results or how they are intercorrelated with average power consumption and delay of transmitting.
+
+Is not clear how they have modeled stochastic components of system, like packet arrival process into the cloudlet or their service time.
+are they xponentially distributed, Uniformly distributed?
+
+
+\subsection{Approximate computing techniques}
+
+Everyday experience teaches us that battery technology is the very bottleneck of every mobile devices, WBAN devices included, and, unfortunately, as known battery technology is advancing very slowly if compared to the others computer technology, like CPU, storage systems and RAM.
+
+A promising solution is \textbf{approximate computing} (and \textbf{storage}), which is based on the intuitive observation that while performing exact computation require high amount of resources, allowing selective approximation or imperfect computations results can provide drastic energy savings.
+
+Today many important mobile applications use a some kind of approximation computing technique, including computer vision, sensor data analysis, machine learning, augmented reality and signal processing. 
+
+Approximate computing leverage the presence of error-tolerant code regions in applications and per-
+ceptual limitations of users to intelligently trade off implementation, storage and/or
+result accuracy for performance or energy gains. In brief, AC exploits the gap between
+the level of accuracy required by the applications/users and that provided by the com-
+puting system, for achieving diverse optimizations.
+
+
+
+
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{Bibliography}
+
+\appendix
+
+\end{document}
+\endinput
