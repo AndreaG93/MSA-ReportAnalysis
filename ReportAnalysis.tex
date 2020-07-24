@@ -40,9 +40,61 @@ The main goal of this paper is to develop a large scale WBANs system in the pres
 
 \vspace{0.3cm}
 
-According to \citet{MSAReport}, the goal of their work is to model is to built an efficient \textbf{Wireless Body Area Networks} (\textbf{WBAN}) exploiting \textbf{edge computing}, a new paradigm in which substantial computing and storage resources, referred to as \textbf{cloudlets}, are placed at the Internet's edge, that is in close proximity to WBAN devices or sensors.\cite{TheEmergenceOfEdgeComputing}
+According to \citet{MSAReport}, the goal of their work is to built an efficient \textbf{Wireless Body Area Networks} (\textbf{WBAN}) exploiting \textbf{edge computing}, a new paradigm in which substantial computing and storage resources, referred to as \textbf{cloudlets}, are placed at the Internet's edge, that is in close proximity to WBAN devices or sensors.\cite{TheEmergenceOfEdgeComputing}
 
-To be more precise, \citet{MSAReport} intent is to exploit edge computing resources to \textbf{minimize average power consumption and delay}, when transmitting collected data by Personal Digital Assistant (PDA) device to cloud, through a \textit{self-adaptive behaviour} according to which \textbf{communication technology is dynamically changed} when users move from one region to another. 
+To be more precise, as stated by \citet{MSAReport}, edge computing resources are exploited in order to \textbf{minimize average power consumption and delay} when transmitting collected data by Personal Digital Assistant (PDA) device to cloud. As we will see next, that intent is achieved through a \textit{self-adaptive behaviour} according to which \textbf{communication technology is dynamically changed} when users move from one region to another. 
+
+\section{WBAN System architecture}
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~3.2]{MSAReport}}]
+In our implementation, the enterprise cloud system will be the ultimate destination of the collected data. The enterprise cloud is also able to send messages back to both the cloudlet system or to WBAN users.
+\end{quoting}
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~4.1]{MSAReport}}]
+The enterprise cloud system is a centralized management and storage point that can be accessed by different organizations that are interested in a certain type of data. Another important feature of the cloudlet system is the ability of bidirectional communications between many WBANs users.
+\end{quoting}
+
+\vspace{0.3cm}
+
+WBAN devices and sensors have very stringent constraints in term of CPU performance, storage resources and battery life to perform a wide range of healthcare, military and sport application. This is the reason because \textbf{Tier-1}, which represents "\textit{the cloud}" in today's parlance, plays a very important role in this kind of system: cloud resources are exploited to overcome WBAN devices penalty, since Tier-1 represents, in terms of archival preservation, the \textit{safest place to store data}, ensuring the long-term integrity and accessibility, and the \textit{main execution site to perform expensive computations}, thanks to its almost unlimited elasticity. 
+
+However cloud resources exploitation isn't a panacea because there are some negative consequence, as the increasing of network \textbf{round-trip times} (\textbf{RTT}) experienced by mobile users; therefore, \citet{MSAReport} solution is to built a system capable to exploit edge computing resources, which, as it has shown, allow to offload compute-intensive operations at very low latency.\cite{TheSeminalRoleEdgeNativeApplications}\cite{TheEmergenceOfEdgeComputing}
+
+To be more precise, WBAN system prototype modelled by \citet{MSAReport} is intended for \textit{edge-accelerated, cloud-native applications}. Why?
+
+\begin{description}
+
+\item[cloud-native] because, to overcome stringent constraints on battery, performance and storage of WBAN devices, cloud resources are exploited, through offloading techniques over a wireless network, \textbf{to execute critical task}; in other words, as stated also by \citet{MSAReport}, \textit{cloud is the primary execution site and it is essential to provide services to final users}.
+
+\item[edge-accelerated] because the system exploits edge computing resources \textbf{only when available}. In that way, that system is capable to provide optimal performance, but \textit{edge resources represents a secondary execution site, that is they are optional to provide services}.
+
+\end{description}
+
+Unfortunately, it is shown edge-accelerated, cloud-native applications can \textbf{only partially} benefit from the advantages of edge computing in term of \textit{response times}, \textit{battery life}, \textit{ingress bandwidth demand reduction}, \textit{privacy} and \textit{fallback services}. However any application using this kind of system involves less investment risk, much less software development, and their markets are much larger since they can function acceptably even in the absence of edge computing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 In fact, their study is based on the observation that, using WiFi technology, a WBAN user will be able to transmit data packet to the cloud with low power, low delay and mostly no connection cost compared with cellular technology:
 
@@ -100,7 +152,7 @@ Therefore, using \citet{EdgeNativeApplications} proposed application taxonomy, t
 
 Unfortunately, it is shown edge-accelerated, cloud-native applications can \textbf{only partially} benefit from the advantages of edge computing in term of \textit{response times}, \textit{battery life}, \textit{ingress bandwidth demand reduction}, \textit{privacy} and \textit{fallback services}. However any application using this kind of system involves less investment risk, much less software development, and their markets are much larger since they can function acceptably even in the absence of edge computing.
 
-\subsection{Performance evaluation}
+\section{Simulations analysis}
 
 The performance of WBAN system proposed by \citet{MSAReport} is evaluated through several simulations focusing on two performance metrics, that is:
 
@@ -125,7 +177,7 @@ Using a custom version of CloudSim simulator, according to \citet{MSAReport}, si
 \item speed of processing a data packet on cloudlet. 
 \end{itemize}
 
-\subsubsection{hgfhfg}
+\subsubsection{First experiment set}
 
 In order to observe the effect on data packet process delay and power consumption according to task load of the received data on the cloudlet, a first set of simulations are carried out \textbf{varying processing speed of data packet} between 100 and 900 million instructions per second (MIPS). 
 
@@ -141,9 +193,72 @@ In this first set of experiments, \citet{MSAReport} draw the following conclusio
 \item aumenta lamda
 \end{itemize} 
 
+is the processing time is decreased increasing the number 
 
 
 
+\end{enumerate}
+
+
+
+
+
+\subsection{Second experiment set}
+
+\citet{MSAReport} perform a second experiment set in order to study the benefits of using edge computing resources, that is study the impact of installing cloudlet on WBAN system performance. 
+To be more precise, that simulation set is focus on monitoring the effects on average transmission power and delay of data packed send by users PDA to cloudlet due to edge resources, varying the number of user, deployed cloudlet and their geographical placement, while monitored area size is fixed to 600 x 400 m.
+
+Here are the results of the simulation:
+
+\begin{enumerate}
+
+\item Increasing the number of available cloudlet in monitored area, average transmission delay of data packed is reduced. There are a number of reasons that explain this phenomenon:
+
+\begin{enumerate}
+
+\item Increasing the number of deployed cloudlet, the probability that an user is close to one of them increase too. It is shown that cloudlet \textbf{physical proximity} to a mobile device \textit{can} decrease RTT, therefore affecting positively on latency, bandwidth and jitter. \cite{TheEmergenceOfEdgeComputing}. 
+
+However, is very important to precise that generally cloudlet physical proximity not always can affect positively RTT. In fact, data packet transmission performances depends on the so-called \textbf{network proximity}, according to which RTT is low and end-to-end bandwidth is high. This is achievable by using a fiber link between a wireless access point and a cloudlet that is many tens or even hundreds of kilometres away. Conversely, physical proximity does not guarantee network proximity since a highly congested WiFi network may have poor RTT.\cite{TheSeminalRoleEdgeNativeApplications}
+
+\item When an WBAN users can transmit data packet within cloudlet coverage, average transmission delay is affected by the nature of connection too. 
+
+In fact, when cloudlet coverage isn't available, data is offloaded to cloud using a \textbf{multi-hop network connections} and moreover, although bandwidth between the mobile device and the first hop (i.e., the first mile) and the last hop and the cloud resource (i.e., the last mile) is potentially high bandwidth, the bandwidth between the rest of the hops is likely low. Therefore RTT is very high.\cite{ArchitecturalTacticsCyberForaging}
+
+Conversely, when cloudlet coverage is available, data is offloaded to a cloudlet using a high bandwidth single-hop connection, therefore RTT decrease.\cite{ArchitecturalTacticsCyberForaging}
+
+\item Increasing the number of available cloudlet in monitored area, average transmission power of data packed is reduced. It is due to the use of WiFi technology instead to cellular network
+
+\item Increasing the number users, both average transmission power and delay increase too. 
+
+Since a polling MAC scheme is used, an higher number of users within an cloudlet WiFi coverage area increasing the time needed to pool every node by AP, in other words the so-called contention-free period is longer. 
+
+According to \citep{MSAReport}, an high congested Wifi network can cause WBAN devices to perform a self-adtaption beahivour accoding to which they switch comunication technoogy, using cellular network to send packet data.
+
+
+
+
+\end{enumerate}
+
+\end{enumerate}
+
+
+\subsection{Third experiment set}
+
+The last experiment set is focusing on monitoring aforementioned performance metric varying cloudlet placement and, precisely, \textbf{inter-cloudlet distance}. For a given monitored area, which size is now fixed to $800 \times 800 \; m$, \citet{MSAReport} had classified cloudlet deployment into three categories:
+
+\begin{description}
+\item[Adjacent deployment] minimum inter-cloudlet distance.
+\item[Distant deployment] maximum inter-cloudlet distance.
+\item[Distant deployment] medium inter-cloudlet distance.
+\end{description}
+
+For each cloudlet deployment category, \citet{MSAReport} had performed several simulations varying number of users, of virtual machines and of cloudlet. Experiments results are the following:
+
+\begin{enumerate}
+
+\item Independently from cloudlet deployment category, increasing the number of cloudlet, the impact of inter-cloudlet distance on average transmission power and delay is negligible. It is true because, increase the opportunities of the users to send the data packet to the corresponding VC using WiFi and with minimum cost of power and delay, rather than of using cellular connection.
+
+\item Intermediate Deployment performs better since show lower average transmission power and delay compared with other deployments, while Adjacent deployment performs worse. As said prevouslty, difdferences about cloudlet deployiment tend to vanish incresing the number of cloudlet.  
 
 \end{enumerate}
 
@@ -158,8 +273,6 @@ In this first set of experiments, \citet{MSAReport} draw the following conclusio
 
 
 
-In first case, data is offloaded to cloud using a \textbf{multi-hop network connections} and moreover, although bandwidth between the mobile de-
-vice and the first hop (i.e., the first mile) and the last hop and the cloud resource (i.e., the last mile) is potentially high bandwidth, the bandwidth between the rest of the hops is likely low. Therefore RTT is very high.
 
 
 
@@ -168,25 +281,7 @@ vice and the first hop (i.e., the first mile) and the last hop and the cloud res
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\subsection{MAC protocol}
+\section{MAC protocol}
 
 According to \citet{MSAReport}, the medium access mechanisms used in their simulation is \textbf{pooling-based}, that is a strictly centralized scheme, also called \textbf{point coordination function} (\textbf{PCF}), in which the access point, called \textbf{master}, dynamically polls clients for data. According to this scheme, the master is allowed to build a list of stations wishing to transmit during a contention phase. After this phase, the station polls each station on the list.
 
