@@ -32,6 +32,8 @@
 
 \section{Introduction}
 
+\subsection{Research's Goal}
+
 \vspace{0.3cm}
 
 \begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~1.4]{MSAReport}}]
@@ -42,9 +44,9 @@ The main goal of this paper is to develop a large scale WBANs system in the pres
 
 According to \citet{MSAReport}, the goal of their work is to built an efficient \textbf{Wireless Body Area Networks} (\textbf{WBAN}) exploiting \textbf{edge computing}, a new paradigm in which substantial computing and storage resources, referred to as \textbf{cloudlets}, are placed at the Internet's edge, that is in close proximity to WBAN devices or sensors.\cite{TheEmergenceOfEdgeComputing}
 
-To be more precise, as stated by \citet{MSAReport}, edge computing resources are exploited in order to \textbf{minimize average power consumption and delay} when transmitting collected data by Personal Digital Assistant (PDA) device to cloud. As we will see next, that intent is achieved through a \textit{self-adaptive behaviour} according to which \textbf{communication technology is dynamically changed} when users move from one region to another. 
+To be more precise, as stated by \citet{MSAReport}, edge computing resources are exploited in order to \textbf{minimize average power consumption and delay} when transmitting collected data by \textbf{Personal Digital Assistant} (\textbf{PDA}) device to cloud. 
 
-\section{WBAN System architecture}
+\subsection{Edge Computing Application Typology}
 
 \vspace{0.3cm}
 
@@ -74,29 +76,17 @@ To be more precise, WBAN system prototype modelled by \citet{MSAReport} is inten
 
 \end{description}
 
-Unfortunately, it is shown edge-accelerated, cloud-native applications can \textbf{only partially} benefit from the advantages of edge computing in term of \textit{response times}, \textit{battery life}, \textit{ingress bandwidth demand reduction}, \textit{privacy} and \textit{fallback services}. However any application using this kind of system involves less investment risk, much less software development, and their markets are much larger since they can function acceptably even in the absence of edge computing.
+According to \citet{TheSeminalRoleEdgeNativeApplications}, it is shown that edge-accelerated, cloud-native applications can have a \textit{modest} advantages in term of \textit{response times}, \textit{battery life}, \textit{ingress bandwidth demand reduction}, \textit{privacy} and \textit{fallback services}\cite{TheSeminalRoleEdgeNativeApplications}\citep{TheEmergenceOfEdgeComputing}, but, as \citet{TheSeminalRoleEdgeNativeApplications} states, edge computing potentiality is not fully exploited due to central role assigned to cloud.
 
+However, it is true that any edge-accelerated, cloud-native applications involves less investment risk, much less software development, and their markets are much larger since they \textit{can function acceptably even in the absence of edge computing}.
 
+\subsection{Edge Computing Resources exploitation}
 
+How edge computing resources are exploited in order to improve, as stated by \citet{MSAReport}, average power consumption and delay during packet transmissions? 
 
+\subsubsection{Using an energy-efficient communication technology}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-In fact, their study is based on the observation that, using WiFi technology, a WBAN user will be able to transmit data packet to the cloud with low power, low delay and mostly no connection cost compared with cellular technology:
+First of all, is very important to precise that \citet{MSAReport} research is based on the observation that using WiFi technology a WBAN user will be able to transmit data packet to the cloud with \textbf{low power consumption}, \textbf{low delay} and mostly \textbf{no connection cost} compared with cellular technology; in fact, they wrote:
 
 \vspace{0.3cm}
 
@@ -106,7 +96,19 @@ It was shown that, via WiFi, the transmission power of a data packet of size 46 
 
 \vspace{0.3cm}
 
-Obliviously, due both to the \textbf{need of edge infrastructure resources} and to \textbf{short transmission range} of WiFi technology compared to cellular network, cloudlet and WiFi coverage aren't available everywhere, therefore \citet{MSAReport} model their system identifying three different regions:\cite[par.~3.1]{MSAReport} 
+Therefore, since WiFi technology is more energy-efficient than cellular technology, if WBAN users have the chance to use it, is possible to reduce average power consumption during packet transmission. 
+
+However, how to exploit WiFi technology in WBAN system taking into account its \textbf{short transmission range} compared to cellular network? Providing an edge computing infrastructure made up of several cloudlets geographically distributed and equipped with computational, storage and communication capability, increasing WiFi coverage. In fact, researchers wrote:
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~4.1]{MSAReport}}]
+The cloudlet system is composed of set of physical servers with many cores and huge Gigabytes of memory. The cloudlet server system is equipped with one or more of the communication antennas that is supporting different physical layer capabilities (e.g. WiFi and WiMax). 
+\end{quoting}
+
+\vspace{0.3cm}
+
+However there is a problem: since WiFi technology transmission range is short and edge infrastructure resources are expensive,  cloudlet and WiFi coverage aren't available everywhere. Therefore, \citet{MSAReport} implemented a \textit{self-adaptive behaviour} according to which \textbf{communication technology is dynamically changed} when users move from one region to another. This is the reason according to which \citet{MSAReport} modelled their system identifying three different regions:\cite[par.~3.1]{MSAReport} 
 
 \begin{description}
 
@@ -118,70 +120,73 @@ Obliviously, due both to the \textbf{need of edge infrastructure resources} and 
 
 \end{description}
 
-\subsection{Architecture Overview}
+In other words, WBAN users are capable to exploit edge computing resources if and only if they are in a \textit{Cloudlet Region}, otherwise they go on transmitting data directly to the cloud, if possible. This is the reason according to which we have previously defined \citet{MSAReport} application as \textit{edge-accelerated}: cloud is very critical for that application since it represents the ultimate destination of collected data and perform critical task providing access to data. In other words, seem enough clear that cloudlet is less critical compared to cloud to providing system services. In fact, \citet{MSAReport} wrote:
 
 \vspace{0.3cm}
 
 \begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~3.2]{MSAReport}}]
-
-The architecture of the enterprise system is mostly same architecture as in cloud based data centres with all its components and features. In our implementation, the enterprise cloud system will be the ultimate destination of the collected data. The enterprise cloud is also able to send messages back to both the cloudlet system or to WBAN users.
-
+In our implementation, the enterprise cloud system will be the ultimate destination of the collected data. The enterprise cloud is also able to send messages back to both the cloudlet system or to WBAN users.
 \end{quoting}
 
 \vspace{0.3cm}
 
-\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~4.1]{MSAReport}}]
-
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~4.1]{MSAReport}}] 
 The enterprise cloud system is a centralized management and storage point that can be accessed by different organizations that are interested in a certain type of data. 
-
 \end{quoting}
 
 \vspace{0.3cm}
 
-Based on what has been said in previous section, in \citet{MSAReport}'s system model WBAN users are capable to exploit edge computing resources if and only if they are in a \textit{Cloudlet Region}, otherwise they go on transmitting data directly to the cloud if possible; therefore, is evident that, as state by \citet{MSAReport} too, cloud plays a very important role in that system since represent the ultimate destination of collected data and perform critical task providing access to data. In other words, seem enough clear that cloudlet is less critical compared to cloud to providing system services.
+\subsubsection{Exploiting network proximity}
 
-Therefore, using \citet{EdgeNativeApplications} proposed application taxonomy, the WBAN system prototype modelled by \citet{MSAReport} is intended for \textit{edge-accelerated, cloud-native applications}:
+Deploying cloudlet \textit{close} to final users, thanks to \textbf{high-bandwidth single-hop connection}, is possible to reduce RTT and to increase end-to-end bandwidth; in other words, we can achieve network-proximity.\citep{TheSeminalRoleEdgeNativeApplications}
 
-\begin{description}
+However, is very important to not confuse \textit{physical proximity} with \textit{network-proximity}. Cloudlet physical proximity not always can affect positively RTT since it does \textit{not} guarantee network proximity: think for example to a highly congested WiFi network which may have poor RTT. Theoretically, is possible to achieve network proximity without physical proximity, for example using a fiber link between a wireless access point and a cloudlet that is many tens or even hundreds of kilometres away assuring therefore low RTT and high bandwidth.\cite{TheSeminalRoleEdgeNativeApplications}
 
-\item[cloud-native] because, to overcome stringent constraints on battery, performance and storage of WBAN devices, cloud resources are exploited, through offloading techniques over a wireless network, \textbf{to execute critical task}; in other words, cloud is the primary execution site and it is essential to provide services to final users.
+\subsubsection{Using cyber-foraging techniques}
 
-\item[edge-accelerated] because the system exploits edge computing resources \textbf{only when available}. In that way, that system is capable to provide optimal performance, but edge resources represents a secondary execution site, that is they are optional to provide services.
+WBAN sensors and devices collect a very huge amount of data. In fact, \citet{MSAReport} wrote:
 
-\end{description}
+\vspace{0.3cm}
 
-Unfortunately, it is shown edge-accelerated, cloud-native applications can \textbf{only partially} benefit from the advantages of edge computing in term of \textit{response times}, \textit{battery life}, \textit{ingress bandwidth demand reduction}, \textit{privacy} and \textit{fallback services}. However any application using this kind of system involves less investment risk, much less software development, and their markets are much larger since they can function acceptably even in the absence of edge computing.
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~1.1]{MSAReport}}]
+The multiple WBAN sensor nodes are capable of sampling, processing, and communicating one or more vital signs like heart rate, blood pressure, oxygen saturation, breathing rate, diabetes, body temperature, ECG and activity, or environmental parameters like location, temperature, humidity, light, movement, proximity and direction. 
+\end{quoting}
+
+\vspace{0.3cm}
+
+Obliviously, WBAN devices and sensors cannot have enough computation and storage resources due to their very strictly constrains in term of size, heat and power consumption. In order to overcome to device limitation, increasing energy efficiency.
+
+In order to overcome to these limitations, \citet{MSAReport} adopt a \textbf{Data Staging Tactic} to allow WBAN devices, after oﬄoading
+collected data to cloudlet or cloud, to free up storage space. To achieve energy-efficiency, all computations regarding collected data 
+are carried out by cloud or cloudlet, therefore \textbf{Computation Offload Tactic} is used too.
 
 \section{Simulations analysis}
 
-The performance of WBAN system proposed by \citet{MSAReport} is evaluated through several simulations focusing on two performance metrics, that is:
+In these section we will analyse simulation's results performed by \citet{MSAReport} in order to quantify performance advantages by using edge computing resources. 
+
+WBAN system performance is evaluated through several simulation sets, focusing on two performance metrics:
 
 \vspace{0.3cm}
 
 \begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~4.2]{MSAReport}}]
 \textit{Packet Transmission Power} and \textit{Packet Delay}. The Packet Transmission Power and Packet Delay are directly measure of the communication energy and delay expenditure from the Personal Digital Assistant (PDA) device to the cloudlet or the enterprise cloud
-
 \end{quoting}
 
 \vspace{0.3cm}
 
-Using a custom version of CloudSim simulator, according to \citet{MSAReport}, simulations were carried out monitoring a virtual space-area, where several cloudlet entities were deployed in known geographic locations in such a way transmission range belonging to different cloudlet not overlapping. Moreover, during simulations, several WBAN users were moved randomly with fixed speed and random pause time. 
+As stated by \citet{MSAReport}, experiments were carried out using a custom version of \textit{CloudSim}\footnote{\url{http://www.cloudbus.org/cloudsim/}} simulator, monitoring a virtual space-area, where several cloudlet entities were deployed in known geographic locations, in such a way transmission range belonging to different cloudlet not overlapping, while some WBAN users were moved randomly with fixed speed and random pause time- 
 
-\citet{MSAReport} performs several set of simulation varying several parameters of their system like:
-\begin{itemize}
-\item number of users.
-\item number of deployed cloudlet.
-\item number of Virtual Machines (VM) deployed in cloudlet.
-\item area size.
-\item cloudlet placement.
-\item speed of processing a data packet on cloudlet. 
-\end{itemize}
+\subsection{First experiment set}
 
-\subsubsection{First experiment set}
+First experiment set goal is to quantify the impact on \textbf{packet process delay}, that is the average service time, and on \textbf{power consumption} due to packet computation by cloudlet by varying following system parameter.
 
-In order to observe the effect on data packet process delay and power consumption according to task load of the received data on the cloudlet, a first set of simulations are carried out \textbf{varying processing speed of data packet} between 100 and 900 million instructions per second (MIPS). 
+\begin{enumerate}
+\item number of virtual machine deployed on a cloudlet (from 0 to 8).
+\item processing speed of data packet, from a minimum 100 to a maximum of 900 \textbf{million instructions per second} (MIPS).
+\item number of WBAN users (up to 150 users).
+\end{enumerate}
 
-In this first set of experiments, \citet{MSAReport} draw the following conclusions:
+According to experiments results, \cite{MSAReport} have shown that:
 
 \begin{enumerate}
 
@@ -204,6 +209,19 @@ is the processing time is decreased increasing the number
 
 
 \subsection{Second experiment set}
+
+
+
+\begin{enumerate}
+\item number of virtual machine deployed on a cloudlet (from 0 to 8).
+\item processing speed of data packet, from a minimum 100 to a maximum of 900 \textbf{million instructions per second} (MIPS).
+\item number of WBAN users (up to 150 users).
+\end{enumerate}
+
+According to experiments results, \cite{MSAReport} have shown that:
+
+
+
 
 \citet{MSAReport} perform a second experiment set in order to study the benefits of using edge computing resources, that is study the impact of installing cloudlet on WBAN system performance. 
 To be more precise, that simulation set is focus on monitoring the effects on average transmission power and delay of data packed send by users PDA to cloudlet due to edge resources, varying the number of user, deployed cloudlet and their geographical placement, while monitored area size is fixed to 600 x 400 m.
@@ -299,26 +317,6 @@ In a WBAN's context, this choice has several advantages:
 
 Obliviously this choice isn't a panacea; it can introduce higher delay under a light load and overhead if nodes have nothing to send.
 
-\subsection{System Architecture}
-
-Edge Computing 
-
-It tends to lengthen
-network round-trip times (RTT) from mobile users, and to
-increase cumulative ingress bandwidth demand from Inter-
-net of Things (IoT) devices.
-
-Remote: Computation or data is oﬄoaded to a remote resource
-such as an enterprise cloud or data center, as shown in part (a)
-of Fig. 3. In this case, it is a synchronous operation that requires
-multiple network hops between the mobile device and the enter-
-prise cloud. Even though the bandwidth between the mobile de-
-vice and the ﬁrst hop (i.e., the ﬁrst mile) and the last hop and the
-cloud resource (i.e., the last mile) is potentially high bandwidth,
-thebandwidthbetweentherestofthehopsislikely low.
-
-
-\citet{MSAReport} 
 
 
 
@@ -331,19 +329,6 @@ thebandwidthbetweentherestofthehopsislikely low.
 
 
 
-\section{Minimizing \textit{Packet Transmission Power}}
-
-
-It was shown that, via WiFi, the transmission power of a data packet of size 46 Bytes will cost about
-30 mw [29,31,32] and with a delay of 0.045 ms. On the other hand, a longer transmission range cellular network connection
-(e.g. 3G and LTE) is capable of transmitting the data packet to the cloud from any location that is cover by cellular network,
-
-which is usually a wider geographic area compared with the WiFi. It was shown that, via cellular, the transmission power of
-data packet of size 46 Bytes will cost about 300 mw and with a delay of 0.45 ms
-
-\section{}
-
-In this section, we will describe other techniques and designs capable to reduce power consumption in WBAN devices.
 
 \subsection{Approximate Computing Techniques}
 
@@ -590,6 +575,17 @@ result accuracy for performance or energy gains. In brief, AC exploits the gap b
 the level of accuracy required by the applications/users and that provided by the com-
 puting system, for achieving diverse optimizations.
 
+
+
+\section{Possible improvements}
+
+\subsubsection{Unikernel instead of }
+
+As stated by \citet{MSAReport}, cloudlet are intended to run a certain number of virtual machine, running x86 Linux, over Xen hypervisor.
+
+It is shown, that running a fully functional operating system over a virtual machine 
+
+General purpose operating system like Linux or Windows were designed to be run on hardware, so they have all the complexity needed for a variety of hardware drivers from an assortment of vendors with different design concepts. These operating systems are also intended to be multi-user, multi-process, and multi-purpose. They are designed to be everything for everyone, so they are necessarily complex and large.
 
 
 
