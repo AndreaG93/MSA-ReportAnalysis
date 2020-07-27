@@ -160,6 +160,7 @@ In order to overcome to these limitations, \citet{MSAReport} adopt a \textbf{Dat
 collected data to cloudlet or cloud, to free up storage space. To achieve energy-efficiency, all computations regarding collected data 
 are carried out by cloud or cloudlet, therefore \textbf{Computation Offload Tactic} is used too.
 
+
 \section{Simulations analysis}
 
 In these section we will analyse simulation's results performed by \citet{MSAReport} in order to quantify performance advantages by using edge computing resources. 
@@ -174,132 +175,9 @@ WBAN system performance is evaluated through several simulation sets, focusing o
 
 \vspace{0.3cm}
 
-As stated by \citet{MSAReport}, experiments were carried out using a custom version of \textit{CloudSim}\footnote{\url{http://www.cloudbus.org/cloudsim/}} simulator, monitoring a virtual space-area, where several cloudlet entities were deployed in known geographic locations, in such a way transmission range belonging to different cloudlet not overlapping, while some WBAN users were moved randomly with fixed speed and random pause time- 
+As stated by \citet{MSAReport}, experiments were carried out using a custom version of \textit{CloudSim}\footnote{\url{http://www.cloudbus.org/cloudsim/}} simulator, monitoring a virtual space-area, where several cloudlet entities were deployed in known geographic locations, in such a way transmission range belonging to different cloudlet not overlapping, while some WBAN users were moved randomly with fixed speed and random pause time.
 
-\subsection{First experiment set}
-
-First experiment set goal is to quantify the impact on \textbf{packet process delay}, that is the average service time, and on \textbf{power consumption} due to packet computation by cloudlet by varying following system parameter.
-
-\begin{enumerate}
-\item number of virtual machine deployed on a cloudlet (from 0 to 8).
-\item processing speed of data packet, from a minimum 100 to a maximum of 900 \textbf{million instructions per second} (MIPS).
-\item number of WBAN users (up to 150 users).
-\end{enumerate}
-
-According to experiments results, \cite{MSAReport} have shown that:
-
-\begin{enumerate}
-
-\item Fixed the average time required to process a packet data on a CPU, that is for a given MIPS process speed, power consumption and processing delay are increased by increasing the number of users. This happens for several reasons:
-
-\begin{itemize}
-\item The fraction of time according to which cloudlet is is busy increases, in other words the period that cloudlet is non-idle is longer; therefore, since more time is needed to complete user tasks, more power are consumed.
-
-\item aumenta lamda
-\end{itemize} 
-
-is the processing time is decreased increasing the number 
-
-
-
-\end{enumerate}
-
-
-
-
-
-\subsection{Second experiment set}
-
-
-
-\begin{enumerate}
-\item number of virtual machine deployed on a cloudlet (from 0 to 8).
-\item processing speed of data packet, from a minimum 100 to a maximum of 900 \textbf{million instructions per second} (MIPS).
-\item number of WBAN users (up to 150 users).
-\end{enumerate}
-
-According to experiments results, \cite{MSAReport} have shown that:
-
-
-
-
-\citet{MSAReport} perform a second experiment set in order to study the benefits of using edge computing resources, that is study the impact of installing cloudlet on WBAN system performance. 
-To be more precise, that simulation set is focus on monitoring the effects on average transmission power and delay of data packed send by users PDA to cloudlet due to edge resources, varying the number of user, deployed cloudlet and their geographical placement, while monitored area size is fixed to 600 x 400 m.
-
-Here are the results of the simulation:
-
-\begin{enumerate}
-
-\item Increasing the number of available cloudlet in monitored area, average transmission delay of data packed is reduced. There are a number of reasons that explain this phenomenon:
-
-\begin{enumerate}
-
-\item Increasing the number of deployed cloudlet, the probability that an user is close to one of them increase too. It is shown that cloudlet \textbf{physical proximity} to a mobile device \textit{can} decrease RTT, therefore affecting positively on latency, bandwidth and jitter. \cite{TheEmergenceOfEdgeComputing}. 
-
-However, is very important to precise that generally cloudlet physical proximity not always can affect positively RTT. In fact, data packet transmission performances depends on the so-called \textbf{network proximity}, according to which RTT is low and end-to-end bandwidth is high. This is achievable by using a fiber link between a wireless access point and a cloudlet that is many tens or even hundreds of kilometres away. Conversely, physical proximity does not guarantee network proximity since a highly congested WiFi network may have poor RTT.\cite{TheSeminalRoleEdgeNativeApplications}
-
-\item When an WBAN users can transmit data packet within cloudlet coverage, average transmission delay is affected by the nature of connection too. 
-
-In fact, when cloudlet coverage isn't available, data is offloaded to cloud using a \textbf{multi-hop network connections} and moreover, although bandwidth between the mobile device and the first hop (i.e., the first mile) and the last hop and the cloud resource (i.e., the last mile) is potentially high bandwidth, the bandwidth between the rest of the hops is likely low. Therefore RTT is very high.\cite{ArchitecturalTacticsCyberForaging}
-
-Conversely, when cloudlet coverage is available, data is offloaded to a cloudlet using a high bandwidth single-hop connection, therefore RTT decrease.\cite{ArchitecturalTacticsCyberForaging}
-
-\item Increasing the number of available cloudlet in monitored area, average transmission power of data packed is reduced. It is due to the use of WiFi technology instead to cellular network
-
-\item Increasing the number users, both average transmission power and delay increase too. 
-
-Since a polling MAC scheme is used, an higher number of users within an cloudlet WiFi coverage area increasing the time needed to pool every node by AP, in other words the so-called contention-free period is longer. 
-
-According to \citep{MSAReport}, an high congested Wifi network can cause WBAN devices to perform a self-adtaption beahivour accoding to which they switch comunication technoogy, using cellular network to send packet data.
-
-
-
-
-\end{enumerate}
-
-\end{enumerate}
-
-
-\subsection{Third experiment set}
-
-The last experiment set is focusing on monitoring aforementioned performance metric varying cloudlet placement and, precisely, \textbf{inter-cloudlet distance}. For a given monitored area, which size is now fixed to $800 \times 800 \; m$, \citet{MSAReport} had classified cloudlet deployment into three categories:
-
-\begin{description}
-\item[Adjacent deployment] minimum inter-cloudlet distance.
-\item[Distant deployment] maximum inter-cloudlet distance.
-\item[Distant deployment] medium inter-cloudlet distance.
-\end{description}
-
-For each cloudlet deployment category, \citet{MSAReport} had performed several simulations varying number of users, of virtual machines and of cloudlet. Experiments results are the following:
-
-\begin{enumerate}
-
-\item Independently from cloudlet deployment category, increasing the number of cloudlet, the impact of inter-cloudlet distance on average transmission power and delay is negligible. It is true because, increase the opportunities of the users to send the data packet to the corresponding VC using WiFi and with minimum cost of power and delay, rather than of using cellular connection.
-
-\item Intermediate Deployment performs better since show lower average transmission power and delay compared with other deployments, while Adjacent deployment performs worse. As said prevouslty, difdferences about cloudlet deployiment tend to vanish incresing the number of cloudlet.  
-
-\end{enumerate}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{MAC protocol}
+\subsubsection{MAC protocol}
 
 According to \citet{MSAReport}, the medium access mechanisms used in their simulation is \textbf{pooling-based}, that is a strictly centralized scheme, also called \textbf{point coordination function} (\textbf{PCF}), in which the access point, called \textbf{master}, dynamically polls clients for data. According to this scheme, the master is allowed to build a list of stations wishing to transmit during a contention phase. After this phase, the station polls each station on the list.
 
@@ -317,6 +195,151 @@ In a WBAN's context, this choice has several advantages:
 
 Obliviously this choice isn't a panacea; it can introduce higher delay under a light load and overhead if nodes have nothing to send.
 
+\subsection{First experiment set}
+
+First experiment set goal is to quantify the impact on \textbf{packet process delay}, also known as \textit{average service time}, and on \textbf{power consumption} due to packet computation by cloudlet by varying following system parameter.
+
+\begin{enumerate}
+\item number of virtual machine deployed on a cloudlet (from 0 to 8).
+\item processing speed of data packet, from a minimum 100 to a maximum of 900 \textbf{million instructions per second} (MIPS).
+\item number of WBAN users (up to 150 users).
+\end{enumerate}
+
+According to experiments results, \cite{MSAReport} have shown that:
+
+\begin{enumerate}
+
+\item Increasing the number of virtual machine running on cloudlet, assigning each one a processor, system cloudlet \textbf{utilization}, that is \textit{the fraction of time according to which cloudlet is busy increases}, was been reduced, decreasing therefore processing time.
+
+In fact, fixed data packet average arrival rate $\lambda$ and average service rate of each virtual machine $\mu$, each virtual machine, by symmetry, sees an arrival rate of $\dfrac{\lambda}{k}$, where $k$ is the number of deployed virtual machines. Hence the cloudlet utilization is $\dfrac{\lambda}{k\mu}$, which is less than $\dfrac{\lambda}{\mu}$ using only one server.  
+
+Remember that higher utilization involves an higher average number of data packet to process, increasing waiting time experienced by final user.
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~3.3]{MSAReport}}]
+the processing time is decreased by approximately 85\% by using cloudlet system configured with 8 VMs comparing to using only one VM in CS.
+\end{quoting}
+
+\vspace{0.3cm}
+
+\item Fixed the average time required to process a packet data on a CPU, that is for a given MIPS process speed, power consumption and processing delay are increased by increasing the number of users. This happens because cloudlet utilization increases since $\lambda$ is higher, therefore the fraction of time according to which cloudlet is busy increases; so, since more time is needed to complete user tasks, more power are consumed.
+
+\end{enumerate}
+
+\subsection{Second experiment set}
+
+Second experiment set was carried out in order to quantify advantages of using edge computing resources. To be more precise, that simulation monitors the effects on \textbf{average transmission power and delay} of data packed send by users PDA to cloudlet, varying following system parameters:
+
+\begin{enumerate}
+\item number of cloudlet deployed (from 0 to 6).
+\item WBAN user's positions (speed of $2\;m/s$ and a random pause time of $1-10\;s$)
+\end{enumerate}
+
+Monitored area size is fixed to $600 \times 400\;m$ while the total number of users is $400$.
+
+According to experiments results, \cite{MSAReport} have shown that:
+
+\begin{enumerate}
+
+\item As expected, increasing the number of available cloudlets in monitored area, average transmission delay of data packed is reduced. It happens since the probability  that an user is close to one of them increases. Having more opportunities to transmit data within cloudlet coverage, users can benefit of cloudlet physical proximity which, as already said in previous section, \textit{can} decrease RTT, affecting positively latency, bandwidth and jitter. \cite{TheEmergenceOfEdgeComputing}. 
+
+Moreover, when cloudlet coverage isn't available, data is offloaded to cloud using a \textbf{multi-hop network connections} which involves high RTT and likely low inter-hop bandwidth, although bandwidth between the mobile device and the first hop (i.e., the first mile) and the last hop and the cloud resource (i.e., the last mile) is potentially high bandwidth.\cite{ArchitecturalTacticsCyberForaging}
+
+Conversely, when cloudlet coverage is available, data is offloaded to a cloudlet using a high bandwidth single-hop connection, which decrease RTT.
+
+\item Increasing the number of available cloudlets, average transmission power of data packed is reduced too. It is due to the use of WiFi technology which is, as already said, more energy-efficient compared to cellular network.
+
+\item Increasing the number of users, both average transmission power and delay increase. This happens mainly due to high congested Wifi network; since a polling MAC scheme is used, an higher number of users within an cloudlet WiFi coverage area increases the time needed to pool every node by AP. On the other hand, as stated by \citep{MSAReport}, an high congested Wifi network can cause WBAN devices to perform a self-adaptation action according to which communication technology is switched, using cellular network to send packet data instead WiFi.
+
+\end{enumerate}
+
+\subsection{Third experiment set}
+
+The last experiment set is focusing on monitoring aforementioned performance metric varying cloudlet geographical placement. Monitoring an $800 \times 800 \; m$ area, simulations were carried out varying following system parameters:
+
+\begin{enumerate}
+\item number of cloudlet deployed (up to 16 cloudlets).
+\item number of WBAN users (up to 1400 users).
+\item WBAN user's positions (same parameters as before)
+\item cloudlet geographical placement (using very different patterns, classified in three categories by \citet{MSAReport}: \textit{Adjacent}, \textit{Distant} and \textit{Intermediate})
+\end{enumerate}
+
+Experiments results are the following:
+
+\begin{enumerate}
+
+\item As expected, independently from cloudlet deployment pattern, increasing the number of cloudlet, the impact of cloudlet geographical placement on average transmission power and delay is negligible since, in that way, the opportunities to send the data packet to a cloudlet, using WiFi and with minimum cost of power and delay, increase.
+
+\item Fixed cloudlet and users number, deploying cloudlet using an intermediate category pattern, that is placing cloudlet neither too far apart nor too close, system performance are better than other patterns belonging to other categories.
+
+\end{enumerate}
+
+\section{Issues}
+
+In this section, we will presents some issues that, we believe, reduce \citep{MSAReport} study quality.
+
+\subsection{The cloudlet discovery and provisioning issue}
+
+As said in previous section, \citet{MSAReport} overcome to WBAN devices limits, in term of computing power and storage, through cyber-foraging techniques like computation offload and data staging. We believe that the system model built by \citet{MSAReport} is too simple to achieve research's goals.
+
+It is shown \cite{DecisionModel} that cyber-foraging systems have \textit{at a minimum} the following combination of functional requirements:
+
+\begin{itemize}
+
+\item  A need for computation ofﬂoad, data staging, or both
+\item  A need to provision a surrogate with the ofﬂoaded computation or data staging capabilities
+\item  A need for the mobile device to locate a surrogate at runtime
+
+\end{itemize}
+
+Although WBAN users \textit{need} to be able to locate available cloudlet in an area where stage data, \textbf{cloudlet discovery} issue has \textit{not} been addressed by \citet{MSAReport} in any way; we believe that it is a very big mistake because cloudlet discovery affects negatively energy consumptions and response time and, anyway, it is a functional requirements for any cyber-foraging systems. 
+
+However there is another reason which that makes cloudlet discovery issue so important: \textbf{security}. \citep{MSAReport} wrote:
+
+\vspace{0.3cm}
+
+\begin{quoting}[font=itshape, begintext={``}, endtext={''\cite[par.~3.3]{MSAReport}}]
+On the other hand, since WBANs forward useful and life-critical information to the cloud, which may operate in distributed and hostile environments, novel security mechanisms are required to prevent malicious interactions to the storage infrastructure. Both the cloud providers and the users must take strong security measures to protect the storage infrastructure.
+\end{quoting}
+
+\vspace{0.3cm}
+
+\citet{MSAReport} should have known that addressing cloudlet discovery issue, they could have improved system security. For example, using \textbf{Cloud Surrogate Directory} tactic, according to which mobile device contacts a cloud server that maintains a list of potential cloudlet/surrogates, security is highly increased because the mobile device only needs to trust the cloud surrogate directory server and can pre-exchange credentials for authorization. 
+
+Generally, when you want to offload data or computation to a cloudlet, a selection algorithm to select best cloudlet is run. In WBAN systems, maximize energy efficiency, in order to preserve devices lifetime, is critical, therefore is preferable not run selection algorithm on WBAN devices, which can decrease energy efficiency (depending on the complexity of the algorithm and the number of monitored variables). Probably, using cloud surrogate directory tactic, according to which selection algorithms run on the cloud, is possible to improve WBAN lifetime. \cite{DecisionModel}
+
+In the same way, \textbf{surrogate provisioning} is another functional requirements for any cyber-foraging systems which is not addressed by \citep{MSAReport}, therefore is not clear how cloudlets manage offloaded computation and/or data processing operations.
+
+During the first experiment set, \citet{MSAReport} had shown that packet process delay is affected by the number of virtual machine deployed in cloudlet. However, provisioning tactic affects this process delay too. It is shown that Pre-provisioned cloudlet have the advantage of shorter provisioning times because the capabilities already reside on cloudlet, providing shorter response times to requests from mobile devices.\cite{DecisionModel}
+
+\subsection{The lack of a specification model}
+
+We believe that \citet{MSAReport} study is hardly reproducible due to the lack of an adequate \textbf{specification model} capable to highlight system state variable and equations and logic describing how the state variables are interrelated, including algorithms for computing their interaction and evolution in time.
+
+For example, \citet{MSAReport} doesn't report how \textit{users movements speed} (fixed to $2 m/s$) and the \textit{random pause time} (fixed to $1-10 s$) affected simulation's results or how they are intercorrelated with average power consumption and delay during the second and the third experiment set.
+
+Cloudlet deployment category 
+
+There is no hint about scheduling policy . Have cloudlets a queue? What is scheduling policy? It is very important because the right scheduling policy can vastly reduce
+mean response time without requiring the purchase of faster machines, but 
+
+
+
+
+
+No hint about system stochastic components, like packet arrival process into the cloudlet.
+
+
+
+
+
+Wearable system in the real-time health monitoring
+
+
+
+Is not clear how they have modeled stochastic components of system, like packet arrival process into the cloudlet or their service time.
+are they xponentially distributed, Uniformly distributed?
 
 
 
@@ -330,7 +353,32 @@ Obliviously this choice isn't a panacea; it can introduce higher delay under a l
 
 
 
-\subsection{Approximate Computing Techniques}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Possible improvement}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -522,21 +570,7 @@ nother approach is to reduce the
 not available.
 
 
-\section{The cloudlet discovery issue}
 
-Is obvious that WBAN users need to be able to locate available cloudlet in an area on which stage data, but this issue has not been addressed by \citet{MSAReport} in any way; we believe that it is a very big mistake because it was shown that cloudlet discovery affects energy consumptions significantly and, more importantly, it is a functional requirements for any cyber-foraging systems.
-
-In WBAN systems, maximize energy efficiency,in order to preserve devices lifetime is critical but, since transmitted data are very sensitive, we believe that security is very important too. Therefore, a possible solution to cloudlet discovery issue is the use of \textbf{Cloud Surrogate Directory} tactic, according to which the mobile device contacts a cloud server that maintains a list of potential cloudlet/surrogates. 
-
-Using this tactic Security is highly increased because the mobile device only needs to trust the cloud surrogate directory server and can pre-exchange credentials for authorization. The surrogate directory server can also exchange credentials with its surrogates as part of the registration process, which means that the directory would only contains trusted surrogates.
-
-Because the selection algorithm of optimal cloudlet runs in the cloud it also increases energy efficiency. 
-
-However, response/execution time can be increased because of the the additional directory
-query time. In addition, availability is negatively affected
-because the mobile device requires consistent connectivity to
-the cloud at least in the discovery phase, which means that
-the cloud server becomes a single-point-of-failure.
 
 \section{Mobility management issue}
 
@@ -550,15 +584,7 @@ As known, the 802.11ah standard enables communication over distances up to $1000
 
 \section{dsadas}
 
-\citet{MSAReport} report lacks of a specification model capable to turn needed system variables 
-’s states into a collection of mathematical variables together with equations and logic describing how the state variables are interrelated, including algorithms for computing their interaction and evolution in time
 
-We believe that the study 
-
-For example, \citet{MSAReport} doesn't report how \textit{users movements speed} (fixed to $2 m/s$) and the \textit{random pause time} (fixed to $1-10 s$) affected simulation's results or how they are intercorrelated with average power consumption and delay of transmitting.
-
-Is not clear how they have modeled stochastic components of system, like packet arrival process into the cloudlet or their service time.
-are they xponentially distributed, Uniformly distributed?
 
 
 \subsection{Approximate computing techniques}
