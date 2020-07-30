@@ -44,7 +44,7 @@ The main goal of this paper is to develop a large scale WBANs system in the pres
 
 According to \citet{MSAReport}, the goal of their work is to built an efficient \textbf{Wireless Body Area Networks} (\textbf{WBAN}) exploiting \textbf{edge computing}, a new paradigm in which substantial computing and storage resources, referred to as \textbf{cloudlets}, are placed at the Internet's edge, that is in close proximity to WBAN devices or sensors.\cite{TheEmergenceOfEdgeComputing}
 
-To be more precise, as stated by \citet{MSAReport}, edge computing resources are exploited in order to \textbf{minimize average power consumption and delay} when transmitting collected data by \textbf{Personal Digital Assistant} (\textbf{PDA}) device to cloud. 
+To be more precise, as stated by \citet{MSAReport}, edge computing resources are exploited in order to \textbf{minimize average power consumption and delay} when \textbf{Personal Digital Assistant} (\textbf{PDA}) transmit collected data.
 
 \subsection{Edge Computing Application Typology}
 
@@ -62,9 +62,13 @@ The enterprise cloud system is a centralized management and storage point that c
 
 \vspace{0.3cm}
 
-WBAN devices and sensors have very stringent constraints in term of CPU performance, storage resources and battery life to perform a wide range of healthcare, military and sport application. This is the reason because \textbf{Tier-1}, which represents "\textit{the cloud}" in today's parlance, plays a very important role in this kind of system: cloud resources are exploited to overcome WBAN devices penalty, since Tier-1 represents, in terms of archival preservation, the \textit{safest place to store data}, ensuring the long-term integrity and accessibility, and the \textit{main execution site to perform expensive computations}, thanks to its almost unlimited elasticity. 
+WBAN devices and sensors have very stringent constraints in term of CPU performance, storage resources and battery life.
 
-However cloud resources exploitation isn't a panacea because there are some negative consequence, as the increasing of network \textbf{round-trip times} (\textbf{RTT}) experienced by mobile users; therefore, \citet{MSAReport} solution is to built a system capable to exploit edge computing resources, which, as it has shown, allow to offload compute-intensive operations at very low latency.\cite{TheSeminalRoleEdgeNativeApplications}\cite{TheEmergenceOfEdgeComputing}
+to perform a wide range of healthcare, military and sport application, \textbf{Tier-1}, which represents "\textit{the cloud}" in today's parlance, plays a very important role in this kind of system: cloud resources are exploited to overcome WBAN devices constraints, since Tier-1 represents, in terms of archival preservation, the \textit{safest place to store data}, ensuring the long-term integrity and accessibility, and the \textit{main execution site to perform expensive computations}, thanks to its almost unlimited elasticity. 
+
+However cloud resources exploitation isn't a panacea due to some negative consequence, as the increasing of network \textbf{round-trip times} (\textbf{RTT}) experienced by mobile users. 
+
+Therefore, \citet{MSAReport} have built a system capable to exploit edge computing resources too, in order to offload compute-intensive operations at very low latency.\cite{TheSeminalRoleEdgeNativeApplications}\cite{TheEmergenceOfEdgeComputing}
 
 To be more precise, WBAN system prototype modelled by \citet{MSAReport} is intended for \textit{edge-accelerated, cloud-native applications}. Why?
 
@@ -138,7 +142,7 @@ The enterprise cloud system is a centralized management and storage point that c
 
 \subsubsection{Exploiting network proximity}
 
-Deploying cloudlet \textit{close} to final users, thanks to \textbf{high-bandwidth single-hop connection}, is possible to reduce RTT and to increase end-to-end bandwidth; in other words, we can achieve network-proximity.\citep{TheSeminalRoleEdgeNativeApplications}
+Deploying cloudlet \textit{close} to final users, thanks to \textbf{high-bandwidth single-hop connection}, is possible to reduce RTT and to increase end-to-end bandwidth; in other words, we can achieve \textbf{network-proximity}.\citep{TheSeminalRoleEdgeNativeApplications}
 
 However, is very important to not confuse \textit{physical proximity} with \textit{network-proximity}. Cloudlet physical proximity not always can affect positively RTT since it does \textit{not} guarantee network proximity: think for example to a highly congested WiFi network which may have poor RTT. Theoretically, is possible to achieve network proximity without physical proximity, for example using a fiber link between a wireless access point and a cloudlet that is many tens or even hundreds of kilometres away assuring therefore low RTT and high bandwidth.\cite{TheSeminalRoleEdgeNativeApplications}
 
@@ -154,13 +158,11 @@ The multiple WBAN sensor nodes are capable of sampling, processing, and communic
 
 \vspace{0.3cm}
 
-Obliviously, WBAN devices and sensors cannot have enough computation and storage resources due to their very strictly constrains in term of size, heat and power consumption. In order to overcome to device limitation, increasing energy efficiency.
+Obliviously, WBAN devices and sensors cannot have enough computation and storage resources due to their very strictly constrains in term of size and power consumption. 
 
-In order to overcome to these limitations, \citet{MSAReport} adopt a \textbf{Data Staging Tactic} to allow WBAN devices, after oﬄoading
-collected data to cloudlet or cloud, to free up storage space. To achieve energy-efficiency, all computations regarding collected data 
-are carried out by cloud or cloudlet, therefore \textbf{Computation Offload Tactic} is used too.
+In order to overcome WBAN devices limitation, increasing energy efficiency, several cyber-foraging techniques are used: \citet{MSAReport} adopt a \textbf{Data Staging Tactic} to allow WBAN devices, after oﬄoading collected data to cloudlet or cloud, to free up storage space. To achieve energy-efficiency, all computations regarding collected data are carried out by cloud or cloudlet, therefore \textbf{Computation Offload Tactic} is used too.
 
-\cite{MSAReport} adopt a very static approach to offloading since, if a offload target is available, data will be \textit{always} offloaded. 
+\citet{MSAReport} adopt a very static approach to offloading since, if a offload target is available, data will be \textit{always} offloaded. 
 However, WBAN users devices exhibit a self-adaptive behaviour according to which they can decide to offload towards cloud instead of clodulet if Wifi network is highly congested; in fact, researchers wrote:
 
 \vspace{0.3cm}
@@ -173,11 +175,11 @@ each VC region is able to serve a certain number of users [...] Then, the extra 
 
 \subsection{Other architectural considerations}
 
-According to \citep{MSAReport}, self-adaptive control decision aren't coordinated between WBAN users devices, every of which act independently; therefore any kind of control decisions decentralization pattern is been used.
+Self-adaptive control decision aren't coordinated between WBAN users devices, every of which acts independently; therefore any kind of control decisions decentralization pattern is been used.
 
 However, we can consider \citet{MSAReport} system as a distributed self-adaptive system since the self-adaptive software is deployed in every node (both \textit{managed software} and \textit{managing software} are deployed in every WBAN node).
 
-\section{Simulations analysis}
+\section{Simulations Analysis}
 
 In these section we will analyse simulation's results performed by \citet{MSAReport} in order to quantify performance advantages by using edge computing resources. 
 
@@ -201,15 +203,15 @@ In a WBAN's context, this choice has several advantages:
 
 \begin{itemize}
 
-\item PCF is capable to offer time-bounded service, \textbf{guaranteeing a maximum access delay and minimum transmission bandwidth} making the system more \textbf{predictable} and, therefore, more suitable \textbf{real-time} health monitoring; in fact, if a predictable system is used, will be possible to know with reasonable approximation the \textit{worst case execution time} (WCET) of jobs and check if any hard real-time constraints is respected.
+\item PCF is capable to offer time-bounded service, \textbf{guaranteeing a maximum access delay and minimum transmission bandwidth} making the system more \textbf{predictable} and, therefore, more suitable for \textbf{real-time} health monitoring; in fact, if a predictable system is used, will be possible to know with reasonable approximation the \textit{worst case execution time} (WCET) of jobs and check if any hard real-time constraints is respected.
 
-\item Since WBAN users are not allowed to send data without the master's invitation, the \textbf{hidden terminal problem is eliminated}. Keep in mind that using DCF (Distributed coordination function) with RTS/CTS extension, in order to resolve hidden terminal problem, is not suitable in a WBAN's context because to short frame (only 46 byte) send by devices; RTS/CTS extension would introduce a non-negligible overhead causing a waste of bandwidth, higher delay and energy consumption.
+\item Since WBAN users are not allowed to send data without the master's invitation, the \textbf{hidden terminal problem is eliminated}. Keep in mind that using DCF (Distributed coordination function) with RTS/CTS extension, in order to resolve hidden terminal problem, is not suitable in a WBAN's context because to short frame (only 46 byte) send by devices; RTS/CTS extension would introduce a non-negligible overhead causing a waste of bandwidth, higher delay and energy consumption.\cite{schiller2003mobile}
 
-\item This scheme allow higher throughput due to less collisions respect to CSMA/CA.
+\item This scheme allow higher throughput due to less collisions respect to CSMA/CA.\cite{schiller2003mobile}
 
 \end{itemize}
 
-Obliviously this choice isn't a panacea; it can introduce higher delay under a light load and overhead if nodes have nothing to send.
+Obliviously this choice isn't a panacea; it can introduce higher delay under a light load and overhead if nodes have nothing to send.\cite{schiller2003mobile}
 
 \subsection{First experiment set}
 
@@ -266,7 +268,15 @@ Conversely, when cloudlet coverage is available, data is offloaded to a cloudlet
 
 \item Increasing the number of available cloudlets, average transmission power of data packed is reduced too. It is due to the use of WiFi technology which is, as already said, more energy-efficient compared to cellular network.
 
-\item Increasing the number of users, both average transmission power and delay increase. This happens mainly due to high congested Wifi network; since a polling MAC scheme is used, an higher number of users within an cloudlet WiFi coverage area increases the time needed to pool every node by AP. On the other hand, as stated by \citep{MSAReport}, an high congested Wifi network can cause WBAN devices to perform a self-adaptation action according to which communication technology is switched, using cellular network to send packet data instead WiFi.
+\item Increasing the number of users, both average transmission power and delay increase. This happens because:
+
+\begin{itemize}
+\item When a cloudlet area contains a large number of users, interferences increase which lead to higher error bit rate, affected negatively both transmission delay, due to loss of data packets or acknowledgements, and power, due to packet retransmission.
+
+\item Since a polling MAC scheme is used, an higher number of users within an cloudlet WiFi coverage area increases the time needed to pool every node by AP. 
+
+\item As stated by \citep{MSAReport}, an high congested Wifi network can cause WBAN devices to perform a self-adaptation action according to which communication technology is switched, using cellular network to send packet data instead WiFi, affecting negatively aforementioned metrics.
+\end{itemize}
 
 \end{enumerate}
 
@@ -309,7 +319,7 @@ It is shown \cite{DecisionModel} that cyber-foraging systems have \textit{at a m
 
 \end{itemize}
 
-Although WBAN users \textit{need} to be able to locate available cloudlet in an area where stage data, \textbf{cloudlet discovery} issue has \textit{not} been addressed by \citet{MSAReport} in any way; we believe that it is a very big mistake because cloudlet discovery affects negatively energy consumptions and response time and, anyway, it is a functional requirements for any cyber-foraging systems. 
+Although WBAN users \textit{need} to be able to locate available cloudlet in an area where stage data, \textbf{cloudlet discovery} issue has \textit{not} been addressed by \citet{MSAReport} in any way; we believe that it is a very big mistake because cloudlet discovery affects negatively energy consumptions and response time and, anyway, it is a \textbf{functional requirements} for any cyber-foraging systems. 
 
 However there is another reason which that makes cloudlet discovery issue so important: \textbf{security}. \citep{MSAReport} wrote:
 
@@ -426,7 +436,7 @@ are they xponentially distributed, Uniformly distributed?
 
 
 
-\section{Possible improvement}
+\section{Possible Improvement}
 
 In this last section, we will explore possible improvements applicable to \citep{MSAReport} proposed WBAN system.
 
