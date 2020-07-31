@@ -3,6 +3,7 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{natbib}
 \usepackage{quoting}
+\usepackage{tikz}
 
 \AtBeginDocument{%
   \providecommand\BibTeX{{%
@@ -86,7 +87,7 @@ However, it is true that any edge-accelerated, cloud-native applications involve
 
 \subsection{Edge Computing Resources exploitation}
 
-How edge computing resources are exploited in order to improve, as stated by \citet{MSAReport}, average power consumption and delay during packet transmissions? 
+How edge computing resources are been exploited in order to improve, as stated by \citet{MSAReport}, average power consumption and delay during packet transmissions? 
 
 \subsubsection{Using an energy-efficient communication technology}
 
@@ -175,15 +176,67 @@ each VC region is able to serve a certain number of users [...] Then, the extra 
 
 \subsection{Other architectural considerations}
 
-Self-adaptive control decision aren't coordinated between WBAN users devices, every of which acts independently; therefore any kind of control decisions decentralization pattern is been used.
+It's clear that \citet{MSAReport} had built a \textbf{self-adaptive system} because it is capable to change its behaviour when execution environment changes. Let's now try to be more precise:
 
-However, we can consider \citet{MSAReport} system as a distributed self-adaptive system since the self-adaptive software is deployed in every node (both \textit{managed software} and \textit{managing software} are deployed in every WBAN node).
+\begin{itemize}
+
+\item From a deployment point of view, this system represents a \textbf{distributed self-adaptive system} since a self-adaptive software, including both \textit{managed software} and \textit{managing software}, is deployed in every WBAN users device.\cite{PatternsDecentralizedSelf}
+
+\item From decisions control point of view, we can consider it a \textbf{decentralized self-adaptive system} too due to the lack of a central control component that decides about when and how to perform an adaptation; in other words, all WBAN nodes are responsible for adaptations, therefore control decision is decentralized.\cite{PatternsDecentralizedSelf} 
+
+However, is very important to precise that in \citet{MSAReport} system there is no coordination between WBAN nodes referring to control decision. All  of them act independently, deciding adaptations autonomously, therefore, any kind of control decisions decentralization pattern is been used.  
+
+\item From an architectural point of view, that system is based on a \textbf{MAPE-K feedback control loop} and represents a \textbf{autonomic system}. In fact, all WBAN nodes act as \textit{autonomic elements} because they manage their behaviour in accordance not only with execution environmental changes, but according to \textit{policies and goals} established by \citep{MSAReport} too. In other words, that system has \textbf{self-management capabilities}, relieving WBAN users of the responsibility of directly managing their device changing communication technology to achieve established goals; as known, self-management is the essence of autonomic computing.\cite{visionOf}
+
+Let's study in deep the control feedback loop of that system:
+\begin{description}
+
+\item[Knowledge/Goal] The goals established by \citet{MSAReport} are average power consumption and average transmission delay minimization.
+
+\item[Monitor] The monitoring process is responsible for collecting data from environment like network quality and WiFi or cellular connection availability. 
+
+\item[Analyse] Measured data are analysed in order to detect WiFi congestion condition level ("Low" or "High") and check what is the current region ("NC", "ER" or "CR") where user is.
+
+\item[Plan] Select and plan a solution to achieve established goal in according to system state diagram represented in \ref{fig:Chain}. 
+
+\item[Execute] Change communication technology according to current state.
+
+\end{description}
+
+\item \citet{MSAReport} solution can be considered as \textbf{application-transparent} since WBAN applications are \textit{not} informed that a communication technology change is occurred; in other words, underlying system is the only responsible for the adaptation. In this way, compatibility with already existing applications is assured, although adaptations can affect negatively on WBAN applications. 
+
+\end{itemize}
+
+\begin{figure}
+\caption{State diagram of communication technology used by WBAN devices} \label{fig:Chain}
+\begin{tikzpicture}[->,node distance=5.6cm,>=latex,font=\small, minimum width=2.5cm]
+
+\tikzstyle{round}=[thick,draw=black,circle]
+
+    \node[round] 			    		 (00) {\texttt{Disconnected}};
+    \node[round,right of=00]      (10) {\texttt{Cell. Network}};
+    \node[round,below of=10]    (01) {\texttt{WiFi}};
+
+	\path 
+ 	(00) 	edge[bend left, above]        node	 	{\texttt{ER $\vee$ (CR $\wedge$ "High WiFi congestion"})} 							(10)
+ 	        edge[bend right, below]      node [rotate=-45]				    {\texttt{CR $\wedge$ "Low WiFi congestion"}} 							(01)
+ 	
+	(10) edge[bend left, above]        node [xshift=13,rotate=-90]	{\texttt{CR $\wedge$ "Low WiFi congestion"}} 							(01)
+		   edge[bend left, below]        node 	{\texttt{NC}} 																		(00)
+		   edge[loop above]      		  node   {\texttt{CR $\wedge$ "High WiFi congestion"}} 							(10)
+		   
+	(01) edge[loop below]      		  node   {\texttt{CR $\wedge$ "Low WiFi congestion"}} 							(01)
+		   edge[bend left, above]       	 node 	{\texttt{ER $\vee$ (CR $\wedge$ "High WiFi congestion"})} 						(10)
+		edge[bend right, above]       	 node 	{\texttt{NC}} 						(00);
+
+\end{tikzpicture}
+\end{figure}
 
 \section{Simulations Analysis}
 
 In these section we will analyse simulation's results performed by \citet{MSAReport} in order to quantify performance advantages by using edge computing resources. 
 
-WBAN system performance is evaluated through several simulation sets, focusing on two performance metrics:
+WBAN system performance is evaluated through several simulation sets focusing mainly on two performance metrics:
 
 \vspace{0.3cm}
 
@@ -215,23 +268,27 @@ Obliviously this choice isn't a panacea; it can introduce higher delay under a l
 
 \subsection{First experiment set}
 
-First experiment set goal is to quantify the impact on \textbf{packet process delay}, also known as \textit{average service time}, and on \textbf{power consumption} due to packet computation by cloudlet by varying following system parameter.
+First experiment set goal is to quantify both \textbf{packet process delay} and \textbf{power consumption}, due to packet computation, by cloudlet varying following system parameter.
 
 \begin{enumerate}
-\item number of virtual machine deployed on a cloudlet (from 0 to 8).
+
+\item number of virtual machine deployed on a cloudlet (0, 2, 4 or 8). The maximum number of deployable virtual machines is bounded by the number of physical processors available on cloudlet (\citet{MSAReport} prototype cloudlet have 8 physical processors, therefore 8 is the maximum number of deployable VMs).
+ 
 \item processing speed of data packet, from a minimum 100 to a maximum of 900 \textbf{million instructions per second} (MIPS).
+
 \item number of WBAN users (up to 150 users).
+
 \end{enumerate}
 
 According to experiments results, \cite{MSAReport} have shown that:
 
 \begin{enumerate}
 
-\item Increasing the number of virtual machine running on cloudlet, assigning each one a processor, system cloudlet \textbf{utilization}, that is \textit{the fraction of time according to which cloudlet is busy increases}, was been reduced, decreasing therefore processing time.
+\item Increasing the number of virtual machines running on a cloudlet, packet process delay will be reduced, because more data packets can be processed simultaneously reducing waiting time.
 
-In fact, fixed data packet average arrival rate $\lambda$ and average service rate of each virtual machine $\mu$, each virtual machine, by symmetry, sees an arrival rate of $\dfrac{\lambda}{k}$, where $k$ is the number of deployed virtual machines. Hence the cloudlet utilization is $\dfrac{\lambda}{k\mu}$, which is less than $\dfrac{\lambda}{\mu}$ using only one server.  
+In fact, fixed data packet \textit{average arrival rate} $\lambda$ and \textit{average service rate} $\mu$ of each virtual machine or processor, system cloudlet \textbf{utilization}, that is \textit{the fraction of time according to which cloudlet is busy}, is reduced; each virtual machine, by symmetry, sees an arrival rate of $\dfrac{\lambda}{k}$, where $k$ is the number of deployed virtual machines. Hence the cloudlet utilization drops to $\dfrac{\lambda}{k\mu}$ from $\dfrac{\lambda}{\mu}$ respect to single server case.   
 
-Remember that higher utilization involves an higher average number of data packet to process, increasing waiting time experienced by final user.
+Remember that higher utilization involves an higher average number of data packet to process (\textit{average population} in a system), increasing waiting time.
 
 \vspace{0.3cm}
 
@@ -241,7 +298,7 @@ the processing time is decreased by approximately 85\% by using cloudlet system 
 
 \vspace{0.3cm}
 
-\item Fixed the average time required to process a packet data on a CPU, that is for a given MIPS process speed, power consumption and processing delay are increased by increasing the number of users. This happens because cloudlet utilization increases since $\lambda$ is higher, therefore the fraction of time according to which cloudlet is busy increases; so, since more time is needed to complete user tasks, more power are consumed.
+\item Fixed the average time required to process a packet data on a CPU, that is for a given MIPS process speed, power consumption and processing delay are increased by increasing the number of users. This happens because cloudlet utilization increases because $\lambda$ is higher, therefore the fraction of time according to which cloudlet is busy increases too; so, since more time is needed to complete user tasks, more power are consumed.
 
 \end{enumerate}
 
@@ -254,7 +311,7 @@ Second experiment set was carried out in order to quantify advantages of using e
 \item WBAN user's positions (speed of $2\;m/s$ and a random pause time of $1-10\;s$)
 \end{enumerate}
 
-Monitored area size is fixed to $600 \times 400\;m$ while the total number of users is $400$.
+Monitored area size is fixed to $600 \times 400\;m$ while the total number of users is fixed to $400$.
 
 According to experiments results, \cite{MSAReport} have shown that:
 
@@ -262,21 +319,19 @@ According to experiments results, \cite{MSAReport} have shown that:
 
 \item As expected, increasing the number of available cloudlets in monitored area, average transmission delay of data packed is reduced. It happens since the probability  that an user is close to one of them increases. Having more opportunities to transmit data within cloudlet coverage, users can benefit of cloudlet physical proximity which, as already said in previous section, \textit{can} decrease RTT, affecting positively latency, bandwidth and jitter. \cite{TheEmergenceOfEdgeComputing}. 
 
-Moreover, when cloudlet coverage isn't available, data is offloaded to cloud using a \textbf{multi-hop network connections} which involves high RTT and likely low inter-hop bandwidth, although bandwidth between the mobile device and the first hop (i.e., the first mile) and the last hop and the cloud resource (i.e., the last mile) is potentially high bandwidth.\cite{ArchitecturalTacticsCyberForaging}
-
-Conversely, when cloudlet coverage is available, data is offloaded to a cloudlet using a high bandwidth single-hop connection, which decrease RTT.
+As known, when cloudlet coverage is available, data is offloaded to a cloudlet using a high bandwidth single-hop connection, which decrease RTT. Conversely, when cloudlet coverage isn't available, data is offloaded to cloud using a \textbf{multi-hop network connections} which involves high RTT and likely low bandwidth connection.\cite{ArchitecturalTacticsCyberForaging}
 
 \item Increasing the number of available cloudlets, average transmission power of data packed is reduced too. It is due to the use of WiFi technology which is, as already said, more energy-efficient compared to cellular network.
 
 \item Increasing the number of users, both average transmission power and delay increase. This happens because:
 
-\begin{itemize}
-\item When a cloudlet area contains a large number of users, interferences increase which lead to higher error bit rate, affected negatively both transmission delay, due to loss of data packets or acknowledgements, and power, due to packet retransmission.
+\begin{enumerate}
+\item When a cloudlet area contains a large number of users, interferences increase, leading to higher error bit rate and affecting negatively both transmission delay, due to data packets or acknowledgements loss, and power, due to packet retransmission.
 
 \item Since a polling MAC scheme is used, an higher number of users within an cloudlet WiFi coverage area increases the time needed to pool every node by AP. 
 
-\item As stated by \citep{MSAReport}, an high congested Wifi network can cause WBAN devices to perform a self-adaptation action according to which communication technology is switched, using cellular network to send packet data instead WiFi, affecting negatively aforementioned metrics.
-\end{itemize}
+\item As stated by \citet{MSAReport}, an high congested WiFi network can cause WBAN devices to perform a self-adaptation action according to which communication technology is switched, using cellular network to send packet data instead WiFi, affecting negatively aforementioned metrics.
+\end{enumerate}
 
 \end{enumerate}
 
