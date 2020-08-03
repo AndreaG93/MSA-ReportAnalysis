@@ -174,7 +174,7 @@ each VC region is able to serve a certain number of users [...] Then, the extra 
 
 \vspace{0.3cm}
 
-\subsection{Other architectural considerations}
+\subsection{A self-adaptive system}
 
 It's clear that \citet{MSAReport} had built a \textbf{self-adaptive system} because it is capable to change its behaviour when execution environment changes. Let's now try to be more precise:
 
@@ -232,6 +232,12 @@ Let's study in deep the control feedback loop of that system:
 \end{tikzpicture}
 \end{figure}
 
+\subsection{Communication style}
+
+Basically, when a device cannot transfer data packet to cloudlet for some reason, WBAN users are obliged to communicate directly with server-side application running on cloud, therefore a classical \textbf{client-server style communication} is adopted, which use classic \textit{point-to-point} and \textit{synchronous} communications. As known, use this kind of communication can be problematic due to \textbf{high degree of coupling between server and client}, like the lack of failure transparency or latency issue due to blocking nature of that kind of communication.
+
+However, when a WBAN user is capable to communicate through a server, the system adopts another communication style: \textbf{server-side client/agent/server model}. In that case, the \textit{agent} is the cloudlet, which, acting as a surrogate to perform cyber-foraging tactics, is located on the so-called "\textit{fixed}" side portion of the network and, precisely, on the edge of the network. That \textbf{loose-connector} style is capable to reduce coupling degree between server and client achievement several advantages in term of failure transparency (cloudlet can mask temporary cloud application unavailability).
+
 \section{Simulations Analysis}
 
 In these section we will analyse simulation's results performed by \citet{MSAReport} in order to quantify performance advantages by using edge computing resources. 
@@ -284,11 +290,11 @@ According to experiments results, \cite{MSAReport} have shown that:
 
 \begin{enumerate}
 
-\item Increasing the number of virtual machines running on a cloudlet, packet process delay will be reduced, because more data packets can be processed simultaneously reducing waiting time.
+\item Increasing the number of virtual machines running on a cloudlet, packet process delay will be reduced.
 
-In fact, fixed data packet \textit{average arrival rate} $\lambda$ and \textit{average service rate} $\mu$ of each virtual machine or processor, system cloudlet \textbf{utilization}, that is \textit{the fraction of time according to which cloudlet is busy}, is reduced; each virtual machine, by symmetry, sees an arrival rate of $\dfrac{\lambda}{k}$, where $k$ is the number of deployed virtual machines. Hence the cloudlet utilization drops to $\dfrac{\lambda}{k\mu}$ from $\dfrac{\lambda}{\mu}$ respect to single server case.   
+It is shown that, if data packets can be processed in \textbf{parallel}, the \textbf{blocked time} can be reduced. In fact, fixed data packet \textit{average arrival rate} $\lambda$ and \textit{average service rate} $\mu$ of each virtual machine, system cloudlet \textbf{utilization}, that is \textit{the fraction of time according to which cloudlet is busy}, is reduced; each virtual machine, by symmetry, sees an arrival rate of $\dfrac{\lambda}{k}$, where $k$ is the number of deployed virtual machines. Therefore cloudlet utilization, which is equal to $\dfrac{\lambda}{k\mu}$, decrease increasing $k$. According to the famous Erlang-C formula, decreasing utilization, \textbf{blocked time} is been reduced.
 
-Remember that higher utilization involves an higher average number of data packet to process (\textit{average population} in a system), increasing waiting time.
+From an architectural point of view, the increase of the number of virtual machines on a cloudlet can be considered as a \textbf{performance tactic} and, precisely, a \textbf{resource management tactic}, because affects the time within which a response is generated with a better resources management achieved through concurrency.
 
 \vspace{0.3cm}
 
@@ -356,9 +362,7 @@ Experiments results are the following:
 
 \end{enumerate}
 
-\section{Issues}
-
-In this section, we will presents some issues that, we believe, reduce \citep{MSAReport} study quality.
+\section{Further architectural considerations, issues and possible improvements}
 
 \subsection{The cloudlet discovery and provisioning issue}
 
@@ -394,110 +398,9 @@ In the same way, \textbf{surrogate provisioning} is another functional requireme
 
 During the first experiment set, \citet{MSAReport} had shown that packet process delay is affected by the number of virtual machine deployed in cloudlet. However, provisioning tactic affects this process delay too. It is shown that Pre-provisioned cloudlet have the advantage of shorter provisioning times because the capabilities already reside on cloudlet, providing shorter response times to requests from mobile devices.\cite{DecisionModel}
 
-\subsection{The Wifi congestion issue}
-
-\citet{MSAReport} state that in their system WBAN users devices can dynamically decide where to offload, preferring the cloud instead the cloudlet if Wifi network is highly congested. How a wireless congested network is managed?
-
-First of all, is very important to remember that \citet{MSAReport} don't specify which transportation protocol is been used in their system; however packet delay, bandwidth and power consumption are affected also by the specific transportation protocol used due to congestion control mechanism, as in the case of TCP.
-
-Why is so important that aspect?
-
-As known, data packet send by WBAN users are susceptible to high bit error rates due to interference, which cause the loss of the data packets.  
-
-Although, \cite{MSAReport} had given us some details about WBAN users mobility, like their speed or random pause time, any information is given about \textit{residence time} within cloudlet area and the amount of hand-off performed during simulations. Since WiFi coverage is limited to 100 m, WiFi covered areas are very small if compared to cellular network cell size, which potentially leads to frequent hand-off and low residence time. Therefore, especially if a connection-oriented protocol is been used, this situation can lead to frequent disconnections and packets loss.
-
-Since regular TCP interpreters packet loss as congestion symptom, its congestion control mechanism can, as known, can negatively affected WBAN performances.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-to  which interpreter congestion 
-
-Congestion control mechanisms
-
-
-
-
-
-
-
-
-Cell size: determining the suitable cell
-size requires careful design. 
-
-\subsection{The lack of a specification model}
-
-We believe that \citet{MSAReport} study is hardly reproducible due to the lack of an adequate \textbf{specification model} capable to highlight system state variable and equations and logic describing how the state variables are interrelated, including algorithms for computing their interaction and evolution in time.
-
-For example, \citet{MSAReport} doesn't report how \textit{users movements speed} (fixed to $2 m/s$) and the \textit{random pause time} (fixed to $1-10 s$) affected simulation's results or how they are intercorrelated with average power consumption and delay during the second and the third experiment set.
-
-Cloudlet deployment category 
-
-There is no hint about scheduling policy . Have cloudlets a queue? What is scheduling policy? It is very important because the right scheduling policy can vastly reduce
-mean response time without requiring the purchase of faster machines, but 
-
-
-
-
-
-No hint about system stochastic components, like packet arrival process into the cloudlet.
-
-
-
-
-
-Wearable system in the real-time health monitoring
-
-
-
-Is not clear how they have modeled stochastic components of system, like packet arrival process into the cloudlet or their service time.
-are they xponentially distributed, Uniformly distributed?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Possible Improvement}
-
-In this last section, we will explore possible improvements applicable to \citep{MSAReport} proposed WBAN system.
-
 \subsection{IEEE 802.11ah as communication standard}
 
-For several reasons, energy is one of the most valuable resources in a WBAN system. It is shown that the power consumption of WBAN devices is substantially impacted by their transmission power, which can be responsible for up to \textbf{70\%} of the total power consumption; therefore, the use of communication standard capable to minimize the dominant sources of energy waste like \textit{collision}, \textit{inter-network interference} between nearby WBAN devices, \textit{idle listening} and \textit{control packet overhead} is extremely useful to maximizing the lifetime of WBAN devices.
+In addition to changing communication technology, we believe that the use of a communication standard capable to minimize the dominant sources of energy waste like \textit{collision}, \textit{inter-network interference} between nearby WBAN devices, \textit{idle listening} and \textit{control packet overhead} is extremely useful to maximizing the lifetime of WBAN devices.
 
 Unfortunately, \citet{MSAReport} give us very few details about MAC protocol according to which PDA send aggregated data packet to cloudlet. Not even specifying the version of the standard IEEE 802.11 used in their simulations, all we know is that \citep{MSAReport} use IEEE 802.11 with a pooling-based scheme and that WiFi transmission range not exceed 100 m in outdoor. In any case, based on what has been declared by \citep{MSAReport}, is reasonable to assume that they have used legacy IEEE 802.11 protocol with $2.4$ or $5$ GHz bands.
 
@@ -512,85 +415,41 @@ We believe that we can achieve better communication performances over longer dis
 
 \end{itemize}
 
-\subsection{Approximate computing techniques}
+\subsection{Resource demand tactics}
 
-In order to improve WBAN devices battery-life, \textbf{approximate computing} (and \textbf{storage}) can be a promising solution. This paradigm is based on the intuitive observation that, while performing exact computation require high amount of resources, allowing selective approximation or imperfect computations results can provide drastic energy savings.
+In addiction to edge computing resources exploitation, there is another performance tactic capable to reduce latency suitable for WBAN. In previous section, \citet{MSAReport} simulation results had shown that increasing the number of users within a cloudlet region affects negatively system performance for several reasons already explained. 
+
+In order to reduce system utilization and so average packet process delay too, we can adopt a performance tactic according to which \textit{the number of packet to process is reduce managing the packets data generation rate}. In other words, if it is possible to reduce the sampling frequency at which environmental and body variables are monitored, demand can be reduced. A best approach could be to implement a self-adaptive behaviour according to which sampling frequency can varying according to users population within a cloudlet region or other system parameters, like network conditions o residual battery life. 
+
+\subsection{Variable data fidelity tactic}
+
+Unfortunately \citet{MSAReport} \textit{didn't introduce any variable data fidelity tactic} capable to improve WBAN battery life. We believe that the introduction of an \textbf{approximate computing} (and \textbf{storage}) technique can be useful in WBAN context. 
+
+As known, approximate computing is a new paradigm based on the intuitive observation that, while performing exact computation require high amount of resources, allowing selective approximation or imperfect computations results can provide drastic energy savings.
 
 To be more precise, approximate computing leverage the presence of error-tolerant code regions in applications and perceptual limitations of users to intelligently trade off implementation, storage and/or result accuracy for performance or energy gains. In brief, approximate computing exploits the gap between the level of accuracy required by the applications/users and that provided by the computing system.
 
-Many type of approximate computing technique are available: for example, in WBAN context we can adopt a technique according to which critical application data (for example vital signs like heart rate, blood pressure, oxygen etc.) are stored in reliable memory segments with higher refresh rate, conversely less critical data (for example experimental data like location, temperature, humidity, light etc.) are stored into less reliable memory with a less refresh rate. As known, higher is refresh rate, higher is power consumption.\cite{Towards}
+For example, can be useful, in order to improve energy-efficiency, to reduce data fidelity collected by WBAN devices according to network condition, current position or battery status. For instance, we can adopt a technique according to which, when network condition are very bad or totally absent, in order to reduce the energy cost due to data buffering, critical application data (for example vital signs like heart rate, blood pressure, oxygen etc.) are stored in reliable memory segments with higher refresh rate, conversely less critical data (for example experimental data like location, temperature, humidity, light etc.) are stored into less reliable memory with a less refresh rate. As known, higher is refresh rate, higher is power consumption.\cite{Towards}
 
-\cite{ApproximateComputingArticle} had shown that, using approximate computing techniques, applications run 3.78 times faster while energy consumptions are reduced 2.77 times. \citet{ImpactApproximation} achieve similar results, claiming that approximate computing can show up to 30\% energy savings.
+\citet{ApproximateComputingArticle} had shown that, using approximate computing techniques, applications run 3.78 times faster while energy consumptions are reduced 2.77 times. \citet{ImpactApproximation} achieve similar results, claiming that approximate computing can show up to 30\% energy savings.
 
-\subsection{Unikernel}
+\subsection{Scalability and elasticity tactic}
 
-As stated by \citet{MSAReport}, cloudlet are intended to run a certain number of virtual machine, running \texttt{x86} Linux, over Xen hypervisor. 
+Solution proposed by \citep{MSAReport} doesn't exploit any scalability/elasticity tactic in order to increase cloudlet resource efficiency achieving scalability and elasticity. Keep running several virtual machines on a cloudlet while there are few WBAN users within a cloudlet region is a real waste of resources. Moreover full virtualization approaches are usually unsuitable for deploying distributed applications due to their overhead and long boot time.
 
-There is a way to improve performance differently from what \citep{MSAReport} have done? 
+OS-level virtualization based tools, also called \textbf{containers}, are often a better choice for scalability and elasticity purposes since they represent a lightweight alternative to virtual machine thanks to their very small footprint and quick boot time. 
 
-As known, an \textbf{unikernel} is (generally) single-purpose, single address space and single user operative system which have many advantages compared to virtual machines, like very small footprint, quick boot time, higher security and portability among virtualization platforms. Similar to \textbf{containers}, they are  a  lightweight  alternative  for  deploying  distributed  applications based. 
+Exploiting container advantages and using a scalability/elasticity tactic like \textbf{Just-in-Time containers tactic}, typically used to complement the computation offload tactic and data staging tactics, we can achieve aforementioned objectives. This tactic, in order to decrease the load on a cloudlet, supporting a greater number of requests, creates an instance of the offloaded code upon receipt of an offload request, destroying it when request is fulfilled. However, because the instance is created at runtime, there is a response/execution time penalty to create the instance before computation can execute.
 
-Both unikernel and container solution permit to achieve an higher density of running instance on a cloudlet, 
+\subsection{Mobility issue}
 
+\citet{MSAReport} don't specify which transportation protocol is been used in their simulations and, once again, we believe that the lack of that information could be a problem because it is shown that transportation protocol has negative effects on performance in wireless communications, where many data packet can be lost due both to an \textit{high error bit rate} and to an \textit{high amount of disconnections} due to user mobility. For instance, TCP interpreters packet loss as a congestion symptom and the activation of its congestion control mechanisms can, as known, negatively affect performance. 
 
-However, the comparison of uniker-nels  with  other  virtualization  options  regarding  the  concurrentprovisioning  of  instances,  as  in  the  case  of  microservices-basedapplications,  is  still  lacking.  This  paper  provides  an  evaluationof   KVM   (Virtual   Machines),  Docker   (Containers),  and   OSv(Unikernel),  when  provisioning  multiple  instances  concurrentlyin  an  OpenStack  cloud  platform.  We  confirmed  that  OSv  out-performs  the other  options and  also  identified opportunities foroptimization.
+Since WBAN user can move from a region to another, several hand-offs can occur, causing data packets loss and performance worsening. Unfortunately, any information is given about \textit{average residence time} within a region by a WBAN user and the amount of hand-off performed during simulations. According to \citet{MSAReport}, WiFi coverage is limited to 100 m, very little if compared to cellular network transmission range. We believe that this situation could potentially lead to frequent hand-off and low residence time affecting negativity real applications.
 
+\citet{MSAReport} doesn't report how \textit{users movements speed} (fixed to $2 m/s$) and the \textit{random pause time} (fixed to $1-10 s$) affected simulation's results and is not clear how they are intercorrelated with average power consumption and delay during the second and the third experiment set. Obliviously, we will expect that user speed is correlated to the amount of hand-off, therefore faster users involve more hand-offs, however this aspect was not considered. Moreover, we believe that \textbf{cloudlet region size} is a very important parameter since smaller cloudlet regions can potentially increase the amount of hand-off performed by an user. This aspect was also not considered.
 
-
-
-
-
-
-It is shown that virtual machines have many disadvantages 
-
-
-lightweight memory footprint, quick boot time, a
-
-
-
-We believe that running a fully functional operating system over a virtual machine  
-
-
-It is shown, that running a fully functional operating system over a virtual machine 
-
-General purpose operating system like Linux or Windows were designed to be run on hardware, so they have all the complexity needed for a variety of hardware drivers from an assortment of vendors with different design concepts. These operating systems are also intended to be multi-user, multi-process, and multi-purpose. They are designed to be everything for everyone, so they are necessarily complex and large.
-
-A Unikernel, on the other hand, is (generally) single-purpose. 
-
-
-It is not designed to run on hardware, and so lacks the bloat and complexity of drivers. It is not meant to be multi-user or multi-process, so it can focus on creating a single thread of code which runs one application, and one application only. Most are not multi-purpose, as the target is to create a single payload that a particular instance will execute (OSv is an exception). Thanks to this single-minded design, the Unikernel is small, lightweight, and quick. 
-
-\subsection{Improving MAC Protocol in intra-body communications}
-
-Properly in WBAN architecture, the communication architecture is separated into two main components: \textbf{intra body communication} and \textbf{extra-body communication}. The first one refers to the information exchange around the human body, while the second refers to exchanging data between the coordinator (called also sink node) and the external environment.
-
-\citet{MSAReport} give very few attention to intra-body communications: they state that they had used a plain CSMA. However a rich and very extensive research about MAC protocols for intra-body communications exits, since a better  in order to optimize energy efficiency about data delivery to sink node.
-
-Unfortunately, 
-
-Several researches, 
-
-
-
-has its own  attributes in terms of data rate/sampling rate, priority, reliability, and delay criticality which should be taken into consideration in the structure of the MAC protocol.
-
-For example, \citet{ImprovedMAC} proposed a dynamic and traffic-adaptive MAC algorithm for WBAN which takes into account that data produced by sensors differ in terms of data rate/sampling rate, priority, reliability, and delay criticality. Using a priority-based MAC algorithm they achieve energy efficiency, avoiding congestion problem in the 
-channel access and guaranteeing the transmission of emergency data. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Maybe, a better analysis regarding about aforementioned aspects could be very useful for real application and an \textbf{specification model} capable to highlight system state variable and equations and logic describing how the state variables are interrelated, including algorithms for computing their interaction and evolution in time, could be very useful to reproduce simulation and validate \citep{MSAReport} results.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{Bibliography}
