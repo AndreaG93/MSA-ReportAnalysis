@@ -65,7 +65,7 @@ The enterprise cloud system is a centralized management and storage point that c
 
 WBAN devices and sensors have very stringent constraints in term of CPU performance, storage resources and battery life.
 
-to perform a wide range of healthcare, military and sport application, \textbf{Tier-1}, which represents "\textit{the cloud}" in today's parlance, plays a very important role in this kind of system: cloud resources are exploited to overcome WBAN devices constraints, since Tier-1 represents, in terms of archival preservation, the \textit{safest place to store data}, ensuring the long-term integrity and accessibility, and the \textit{main execution site to perform expensive computations}, thanks to its almost unlimited elasticity. 
+To perform a wide range of healthcare, military and sport application, \textbf{Tier-1}, which represents "\textit{the cloud}" in today's parlance, plays a very important role in this kind of system: cloud resources are exploited to overcome WBAN devices constraints, since Tier-1 represents, in terms of archival preservation, the \textit{safest place to store data}, ensuring the long-term integrity and accessibility, and the \textit{main execution site to perform expensive computations}, thanks to its almost unlimited elasticity. 
 
 However cloud resources exploitation isn't a panacea due to some negative consequence, as the increasing of network \textbf{round-trip times} (\textbf{RTT}) experienced by mobile users. 
 
@@ -292,9 +292,9 @@ According to experiments results, \cite{MSAReport} have shown that:
 
 \item Increasing the number of virtual machines running on a cloudlet, packet process delay will be reduced.
 
-It is shown that, if data packets can be processed in \textbf{parallel}, the \textbf{blocked time} can be reduced. In fact, fixed data packet \textit{average arrival rate} $\lambda$ and \textit{average service rate} $\mu$ of each virtual machine, system cloudlet \textbf{utilization}, that is \textit{the fraction of time according to which cloudlet is busy}, is reduced; each virtual machine, by symmetry, sees an arrival rate of $\dfrac{\lambda}{k}$, where $k$ is the number of deployed virtual machines. Therefore cloudlet utilization, which is equal to $\dfrac{\lambda}{k\mu}$, decrease increasing $k$. According to the famous Erlang-C formula, decreasing utilization, \textbf{blocked time} is been reduced.
+It is shown that, if data packets can be processed in \textbf{parallel}, the \textbf{blocked time} can be reduced. In fact, fixed data packet \textit{average arrival rate} $\lambda$ and \textit{average service rate} $\mu$ of each virtual machine, system cloudlet \textbf{utilization}, that is \textit{the fraction of time according to which cloudlet is busy}, is reduced; each virtual machine, by symmetry, sees an arrival rate of $\dfrac{\lambda}{k}$, where $k$ is the number of deployed virtual machines. Therefore cloudlet utilization, which is equal to $\dfrac{\lambda}{k\mu}$, decrease increasing $k$. It is shown that, decreasing utilization, \textbf{blocked time} decreases.\cite{BassSoftwareArchitecture2003}
 
-From an architectural point of view, the increase of the number of virtual machines on a cloudlet can be considered as a \textbf{performance tactic} and, precisely, a \textbf{resource management tactic}, because affects the time within which a response is generated with a better resources management achieved through concurrency.
+From an architectural point of view, the increase of the number of virtual machines on a cloudlet can be considered as a \textbf{performance tactic} and, precisely, a \textbf{resource management tactic}, because affects the time within which a response is generated with a better resources management achieved through concurrency.\cite{BassSoftwareArchitecture2003}
 
 \vspace{0.3cm}
 
@@ -380,7 +380,7 @@ It is shown \cite{DecisionModel} that cyber-foraging systems have \textit{at a m
 
 Although WBAN users \textit{need} to be able to locate available cloudlet in an area where stage data, \textbf{cloudlet discovery} issue has \textit{not} been addressed by \citet{MSAReport} in any way; we believe that it is a very big mistake because cloudlet discovery affects negatively energy consumptions and response time and, anyway, it is a \textbf{functional requirements} for any cyber-foraging systems. 
 
-However there is another reason which that makes cloudlet discovery issue so important: \textbf{security}. \citep{MSAReport} wrote:
+However there is another reason which that makes cloudlet discovery issue so important: \textbf{security}. \citet{MSAReport} wrote:
 
 \vspace{0.3cm}
 
@@ -400,9 +400,9 @@ During the first experiment set, \citet{MSAReport} had shown that packet process
 
 \subsection{IEEE 802.11ah as communication standard}
 
-In addition to changing communication technology, we believe that the use of a communication standard capable to minimize the dominant sources of energy waste like \textit{collision}, \textit{inter-network interference} between nearby WBAN devices, \textit{idle listening} and \textit{control packet overhead} is extremely useful to maximizing the lifetime of WBAN devices.
+In addition to changing communication technology, we believe that the use of a communication standard capable to minimize the main sources of energy waste like \textit{collision}, \textit{inter-network interference}, \textit{idle listening} and \textit{control packet overhead} is extremely useful to maximizing the lifetime of WBAN devices.
 
-Unfortunately, \citet{MSAReport} give us very few details about MAC protocol according to which PDA send aggregated data packet to cloudlet. Not even specifying the version of the standard IEEE 802.11 used in their simulations, all we know is that \citep{MSAReport} use IEEE 802.11 with a pooling-based scheme and that WiFi transmission range not exceed 100 m in outdoor. In any case, based on what has been declared by \citep{MSAReport}, is reasonable to assume that they have used legacy IEEE 802.11 protocol with $2.4$ or $5$ GHz bands.
+Unfortunately, \citet{MSAReport} give us very few details about MAC protocol, however is reasonable to assume that they have used legacy IEEE 802.11 protocol with $2.4$ or $5$ GHz bands.
 
 We believe that we can achieve better communication performances over longer distances among a large number of low-power devices exploiting \textbf{IEEE 802.11ah}. In fact:
 
@@ -417,9 +417,10 @@ We believe that we can achieve better communication performances over longer dis
 
 \subsection{Resource demand tactics}
 
-In addiction to edge computing resources exploitation, there is another performance tactic capable to reduce latency suitable for WBAN. In previous section, \citet{MSAReport} simulation results had shown that increasing the number of users within a cloudlet region affects negatively system performance for several reasons already explained. 
+In order to reduce system utilization, therefore reducing average packet process delay, we can adopt a \textbf{performance tactic} according to which the number of packet to process can be reduced \textit{managing the packets data generation rate}.In other words, if it is possible to reduce the sampling frequency at which environmental and body variables are monitored, demand can be reduced.\cite{BassSoftwareArchitecture2003} 
 
-In order to reduce system utilization and so average packet process delay too, we can adopt a performance tactic according to which \textit{the number of packet to process is reduce managing the packets data generation rate}. In other words, if it is possible to reduce the sampling frequency at which environmental and body variables are monitored, demand can be reduced. A best approach could be to implement a self-adaptive behaviour according to which sampling frequency can varying according to users population within a cloudlet region or other system parameters, like network conditions o residual battery life. 
+A possible solution suitable for WBAN could be to implement a self-adaptive behaviour according to which sampling frequency can be temporary reduced when users population within a cloudlet region grows beyond a certain threshold (other system parameters, like network conditions or residual battery life, can  be considered during adaptation decision).
+
 
 \subsection{Variable data fidelity tactic}
 
@@ -435,21 +436,23 @@ For example, can be useful, in order to improve energy-efficiency, to reduce dat
 
 \subsection{Scalability and elasticity tactic}
 
-Solution proposed by \citep{MSAReport} doesn't exploit any scalability/elasticity tactic in order to increase cloudlet resource efficiency achieving scalability and elasticity. Keep running several virtual machines on a cloudlet while there are few WBAN users within a cloudlet region is a real waste of resources. Moreover full virtualization approaches are usually unsuitable for deploying distributed applications due to their overhead and long boot time.
+Solution proposed by \citet{MSAReport} doesn't exploit any scalability/elasticity tactic in order to increase cloudlet resource efficiency achieving scalability and elasticity. Keep running several virtual machines on a cloudlet while there are few WBAN users within a cloudlet region is a real waste of resources. Moreover full virtualization approaches are usually unsuitable for deploying distributed applications due to their overhead and long boot time.
 
 OS-level virtualization based tools, also called \textbf{containers}, are often a better choice for scalability and elasticity purposes since they represent a lightweight alternative to virtual machine thanks to their very small footprint and quick boot time. 
 
-Exploiting container advantages and using a scalability/elasticity tactic like \textbf{Just-in-Time containers tactic}, typically used to complement the computation offload tactic and data staging tactics, we can achieve aforementioned objectives. This tactic, in order to decrease the load on a cloudlet, supporting a greater number of requests, creates an instance of the offloaded code upon receipt of an offload request, destroying it when request is fulfilled. However, because the instance is created at runtime, there is a response/execution time penalty to create the instance before computation can execute.
+Exploiting container advantages and using a scalability/elasticity tactic like \textbf{Just-in-Time containers tactic}, typically used to complement the computation offload tactic and data staging tactics, we can achieve aforementioned objectives. This tactic, in order to decrease the load on a cloudlet, supporting a greater number of requests, creates an instance of the offloaded code upon receipt of an offload request, destroying it when request is fulfilled. However, because the instance is created at runtime, there is a response/execution time penalty to create the instance before computation can execute.\cite{DecisionModel}\cite{ArchitecturalTacticsCyberForaging}
 
 \subsection{Mobility issue}
 
-\citet{MSAReport} don't specify which transportation protocol is been used in their simulations and, once again, we believe that the lack of that information could be a problem because it is shown that transportation protocol has negative effects on performance in wireless communications, where many data packet can be lost due both to an \textit{high error bit rate} and to an \textit{high amount of disconnections} due to user mobility. For instance, TCP interpreters packet loss as a congestion symptom and the activation of its congestion control mechanisms can, as known, negatively affect performance. 
+\citet{MSAReport} don't specify which transportation protocol is been used in their simulations and, once again, we believe that the lack of that information could be a problem because it is shown that transportation protocol has negative effects on performance in wireless communications, where many data packet can be lost due both to an \textit{high error bit rate} and to an \textit{high amount of disconnections} due to user mobility. 
 
-Since WBAN user can move from a region to another, several hand-offs can occur, causing data packets loss and performance worsening. Unfortunately, any information is given about \textit{average residence time} within a region by a WBAN user and the amount of hand-off performed during simulations. According to \citet{MSAReport}, WiFi coverage is limited to 100 m, very little if compared to cellular network transmission range. We believe that this situation could potentially lead to frequent hand-off and low residence time affecting negativity real applications.
+For instance, TCP interpreters packet loss as a congestion symptom and the activation of its congestion control mechanisms can, as known, negatively affect performance.\cite{tcp}
 
-\citet{MSAReport} doesn't report how \textit{users movements speed} (fixed to $2 m/s$) and the \textit{random pause time} (fixed to $1-10 s$) affected simulation's results and is not clear how they are intercorrelated with average power consumption and delay during the second and the third experiment set. Obliviously, we will expect that user speed is correlated to the amount of hand-off, therefore faster users involve more hand-offs, however this aspect was not considered. Moreover, we believe that \textbf{cloudlet region size} is a very important parameter since smaller cloudlet regions can potentially increase the amount of hand-off performed by an user. This aspect was also not considered.
+Since WBAN user can move from a region to another, several hand-offs can occur, causing data packets loss and performance worsening. Unfortunately, any information is given about \textit{average residence time} within a region by a WBAN user and the amount of hand-off performed during simulations. According to \citet{MSAReport}, WiFi coverage is limited to $100\;m$, very little if compared to cellular network transmission range. We believe that this situation could potentially lead to frequent hand-off and low residence time affecting negativity real applications.
 
-Maybe, a better analysis regarding about aforementioned aspects could be very useful for real application and an \textbf{specification model} capable to highlight system state variable and equations and logic describing how the state variables are interrelated, including algorithms for computing their interaction and evolution in time, could be very useful to reproduce simulation and validate \citep{MSAReport} results.
+\citet{MSAReport} doesn't report how \textit{users movements speed} (fixed to $2 m/s$) and the \textit{random pause time} (fixed to $1-10 s$) affected simulation's results and is not clear how they are intercorrelated with average power consumption and delay during the second and the third experiment set. Obliviously, we will expect that user speed is correlated to the amount of hand-off, therefore faster users involve more hand-offs, however this aspect was not considered. Moreover, we believe that \textbf{cloudlet region size} is a very important parameter since smaller cloudlet regions can potentially increase the amount of hand-off performed by an user.\cite{tcp} This aspect was also not considered.
+
+Maybe, a better analysis regarding about aforementioned aspects, with a highlight system state variable describing how the state variables are interrelated, including algorithms for computing their interaction and evolution in time, would have been useful for reproducibility purposes, in order to  validate \citet{MSAReport} results.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{Bibliography}
