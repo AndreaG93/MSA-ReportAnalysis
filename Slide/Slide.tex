@@ -22,10 +22,13 @@
 % INCLUDE PACKAGES
 %-------------------------------------------------------
 
+\usepackage[natbib=true,backend=bibtex,useprefix=true]{biblatex}
+\addbibresource{bibliography.bib}
 \usepackage[utf8]{inputenc}
 \usepackage{quoting}
 \usepackage{tikz}
-\usepackage{natbib}
+%\usepackage{natbib}
+
 
 %-------------------------------------------------------
 % DEFFINING AND REDEFINING COMMANDS
@@ -607,10 +610,9 @@ Experiments results are the following:
 
 % ************************************************************************** %
 
-\begin{frame}[plain,noframenumbering]
-  Grazie per l'attenzione!
+\begin{frame}[noframenumbering,shrink=15]{Some references}
+\printbibliography
 \end{frame}
-\bibliography{Bibliography}
 
 
 \end{document}
